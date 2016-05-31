@@ -45,30 +45,36 @@ class weight {//extends temp{
 	}
 
 	void initWeight() {
-		List<Double> temp = null;
-		
 		System.out.println("Init weight Start" + w + ", " + h);
-//		weights[0][0][0] = 0;
+		
+//		for (int i = 0; i < w; i++) {
+			ArrayList<ArrayList<ArrayList<Double>>> t = new ArrayList<ArrayList<ArrayList<Double>>>();
+			weights.addAll(t);
+			System.out.println("Test 1 ");
+//		}
+		System.out.println("Test 1 Finish" + weights);
+		
+		for (int i = 0; i < w; i++) {
+//			for (int j = 0; j < h; j++) {
+				ArrayList<ArrayList<Double>> tem = new ArrayList<ArrayList<Double>>();
+				weights.get(i).addAll(tem);
+				System.out.println("Test 2 " + i );
+//			}
+		}
+		System.out.println("Test 2 Finish");
+		
 		for (int i = 0; i < w; i++) {
 			for (int j = 0; j < h; j++) {
-//				Double temp[] = new Double[6];
+				ArrayList<Double> temp = new ArrayList<Double>();
 				for (int k = 0; k < 6; k++) {
-					temp = new ArrayList<Double>();
 					temp.add((double) 0);
-//					temp.set(0, (double) 1);
-					
 				}
 				weights.get(i).get(j).addAll(temp);
-				
-//					System.out.println("( " + i + ", " + j + ", " + k + " )");
-//					System.out.println("( " + i + ", " + j + " )");
-//					ArrayList<Double> temp = new ArrayList<Double>();
-//					weights.get(i).get(j).set(k, (double) 0);
-//					weights.get(i).get(j).get(k).add(0);
-
-				
+				System.out.println("Test 3" + i + ", " + j);
 			}
 		}
+		System.out.println("Test 3 Finish");
+		
 		System.out.println("Init weight Finish");
 	}
 
