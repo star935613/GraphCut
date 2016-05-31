@@ -13,7 +13,7 @@ class weight {//extends temp{
 	private ArrayList<Point> pointL = new ArrayList();
 	private ArrayList<Point> pointR = new ArrayList();
 
-	private ArrayList<ArrayList<ArrayList<Double>>> weights = new ArrayList<ArrayList<ArrayList<Double>>>();		//原本表格的型態
+	private List<List<List<Double>>> weights = new ArrayList<List<List<Double>>>();		//原本表格的型態
 	private int[][] table = new int[w * h + 2][w * h + 2];	//為了輸入準備的
 
 //	void setL(int x, int y) {
@@ -47,34 +47,36 @@ class weight {//extends temp{
 	void initWeight() {
 		System.out.println("Init weight Start" + w + ", " + h);
 		
-//		for (int i = 0; i < w; i++) {
-			ArrayList<ArrayList<ArrayList<Double>>> t = new ArrayList<ArrayList<ArrayList<Double>>>();
-			weights.addAll(t);
+		for (int i = 0; i < w; i++) {
+			List<List<Double>> t = new ArrayList<List<Double>>();
+			weights.add(t);
 			System.out.println("Test 1 ");
-//		}
+		}
 		System.out.println("Test 1 Finish" + weights);
 		
 		for (int i = 0; i < w; i++) {
-//			for (int j = 0; j < h; j++) {
-				ArrayList<ArrayList<Double>> tem = new ArrayList<ArrayList<Double>>();
-				weights.get(i).addAll(tem);
+			for (int j = 0; j < h; j++) {
+				List<Double> tem = new ArrayList<Double>();
+				weights.get(i).add(tem);
 				System.out.println("Test 2 " + i );
-//			}
+			}
 		}
 		System.out.println("Test 2 Finish");
 		
 		for (int i = 0; i < w; i++) {
 			for (int j = 0; j < h; j++) {
-				ArrayList<Double> temp = new ArrayList<Double>();
+				List<Double> temp = new ArrayList<Double>();
 				for (int k = 0; k < 6; k++) {
 					temp.add((double) 0);
 				}
 				weights.get(i).get(j).addAll(temp);
-				System.out.println("Test 3" + i + ", " + j);
+				System.out.println("Test 3 " + i + ", " + j);
 			}
 		}
 		System.out.println("Test 3 Finish");
 		
+		
+		System.out.println(weights);
 		System.out.println("Init weight Finish");
 	}
 
