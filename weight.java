@@ -14,7 +14,8 @@ class weight {//extends temp{
 	private ArrayList<Point> pointR = new ArrayList();
 
 	private List<List<List<Double>>> weights = new ArrayList<List<List<Double>>>();		//原本表格的型態
-	private int[][] table = new int[w * h + 2][w * h + 2];	//為了輸入準備的
+//	private int[][] table = new int[w * h + 2][w * h + 2];	
+	private List<List<Integer>> table = new ArrayList<List<Integer>>();	//為了輸入準備的
 
 //	void setL(int x, int y) {
 //		Point p = new Point(x, y);
@@ -50,42 +51,45 @@ class weight {//extends temp{
 		for (int i = 0; i < w; i++) {
 			List<List<Double>> t = new ArrayList<List<Double>>();
 			weights.add(t);
-			System.out.println("Test 1 ");
+//			System.out.println("Test 1 ");
 		}
-		System.out.println("Test 1 Finish" + weights);
+//		System.out.println("Test 1 Finish);
 		
 		for (int i = 0; i < w; i++) {
 			for (int j = 0; j < h; j++) {
 				List<Double> tem = new ArrayList<Double>();
-				weights.get(i).add(tem);
-				System.out.println("Test 2 " + i );
-			}
-		}
-		System.out.println("Test 2 Finish");
-		
-		for (int i = 0; i < w; i++) {
-			for (int j = 0; j < h; j++) {
 				List<Double> temp = new ArrayList<Double>();
+				weights.get(i).add(tem);
 				for (int k = 0; k < 6; k++) {
 					temp.add((double) 0);
 				}
 				weights.get(i).get(j).addAll(temp);
-				System.out.println("Test 3 " + i + ", " + j);
+//				System.out.println("Test 2 " + i );
 			}
 		}
-		System.out.println("Test 3 Finish");
+//		System.out.println("Test 2 Finish");
 		
 		
-		System.out.println(weights);
+//		System.out.println(weights);
 		System.out.println("Init weight Finish");
 	}
 
 	void initTable() {
-		for (int i = 0; i < w*h+2; i++) {
-			for (int j = 0; j < w*h+2; j++) {
-				table[i][j] = 0;
+		
+		for (int i = 0; i < w*h*2; i++) {
+			table.add( new ArrayList<Integer>() );
+			List<Integer> t = new ArrayList<Integer>();
+			for (int j = 0; j < w*h*2; j++) {
+				t.add(0);
 			}
+			table.get(i).addAll(t);
 		}
+		
+//		for (int i = 0; i < w*h+2; i++) {
+//			for (int j = 0; j < w*h+2; j++) {
+//				table[i][j] = 0;
+//			}
+//		}
 		System.out.println("Init Table Finish");
 	}
 
@@ -219,33 +223,33 @@ class weight {//extends temp{
 
 	}
 
-	int[][] findTeble() {
+	List<List<Integer>> findTeble() {
 
 		for (int i = 0; i < w; i++) {
 			for (int j = 0; j < h; j++) {
 				//nlink
 				if (weights.get(i).get(j).get(0) != 0) {
-					table[i * 3 + j + 1][(i - 1) * 3 + j + 1] = (int) Math.floor(weights.get(i).get(j).get(0));
+					table.get(i * 3 + j + 1).set((i - 1) * 3 + j + 1, (int) Math.floor(weights.get(i).get(j).get(0)));
 				}
 				if (weights.get(i).get(j).get(1) != 0) {
-					table[i * 3 + j + 1][i * 3 + (j - 1) + 1] = (int) Math.floor(weights.get(i).get(j).get(1));
+					table.get(i * 3 + j + 1).set(i * 3 + (j - 1) + 1, (int) Math.floor(weights.get(i).get(j).get(1)));
 				}
 				if (weights.get(i).get(j).get(2) != 0) {
-					table[i * 3 + j + 1][(i + 1) * 3 + j + 1] =(int) Math.floor(weights.get(i).get(j).get(2));
+					table.get(i * 3 + j + 1).set((i + 1) * 3 + j + 1, (int) Math.floor(weights.get(i).get(j).get(2)));
 				}
 				if (weights.get(i).get(j).get(3) != 0) {
-					table[i * 3 + j + 1][i * 3 + (j + 1) + 1] = (int) Math.floor(weights.get(i).get(j).get(3));
+					table.get(i * 3 + j + 1).set(i * 3 + (j + 1) + 1, (int) Math.floor(weights.get(i).get(j).get(3)));
 				}
 //				System.out.println("find Tablie nlink Finish");
 
 				//S
-				table[i*3 + j + 1][0] = (int) Math.floor(weights.get(i).get(j).get(4));
-				table[0][i*3 + j + 1] = (int) Math.floor(weights.get(i).get(j).get(4));
+				table.get(i*3 + j + 1).set(0, (int) Math.floor(weights.get(i).get(j).get(4)));
+				table.get(0).set(i*3 + j + 1, (int) Math.floor(weights.get(i).get(j).get(4)));
 //				System.out.println("find Tablie S Finish");
 
 				//T
-				table[i*3 + j + 1][w*h + 1] = (int) Math.floor(weights.get(i).get(j).get(5));
-				table[w*h + 1][i*3 + j + 1] = (int) Math.floor(weights.get(i).get(j).get(5));
+				table.get(i*3 + j + 1).set(w*h + 1, (int) Math.floor(weights.get(i).get(j).get(5)));
+				table.get(w*h + 1).set(i*3 + j + 1, (int) Math.floor(weights.get(i).get(j).get(5)));
 //				System.out.println("find Tablie T Finish");
 			}
 		}
@@ -266,7 +270,7 @@ class weight {//extends temp{
 				System.out.printf("  " + i);
 			}
 			for (int j = 0; j < h * w + 2; j++) {
-					System.out.printf("	" + table[i][j]);
+					System.out.printf("	" + table.get(i).get(j));
 			}
 			System.out.println();
 		}

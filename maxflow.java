@@ -1,7 +1,4 @@
 import java.util.*;
-import java.util.Scanner;
-import java.util.Queue;  
-import java.util.Iterator;
 
 public class maxflow
 {
@@ -62,7 +59,7 @@ public class maxflow
 
 
 	//flow- main function
- 	public int maxflow(int graph[][], int source, int sink)
+ 	public int maxflow(List<List<Integer>> graph, int source, int sink)
  	{	
  		int[][] residual = new int[nodeNum][nodeNum];
  		int path;
@@ -72,7 +69,7 @@ public class maxflow
  		for(int a = 0; a < nodeNum; a++)
 		{
 			for(int b = 0; b < nodeNum; b++)
-				 residual[a][b] = graph[a][b];
+				 residual[a][b] = graph.get(a).get(b);
 		}
 
 		while (bfS(source, sink, residual))
@@ -122,9 +119,9 @@ public class maxflow
 		{
 			for(int b = 0; b < sinkVertex.size(); b++)
 			{
-				if(graph[sourceVertex.get(a)][sinkVertex.get(b)] > 0)
+				if(graph.get(sourceVertex.get(a)).get(sinkVertex.get(b)) > 0)
 					System.out.println(sourceVertex.get(a) + "-" + sinkVertex.get(b));
-				else if(graph[sinkVertex.get(b)][sourceVertex.get(a)] > 0)
+				else if(graph.get(sinkVertex.get(b)).get(sourceVertex.get(a)) > 0)
 					System.out.println(sinkVertex.get(b) + "-" + sourceVertex.get(a));
 						
 				

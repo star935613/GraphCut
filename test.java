@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.*;
 import javax.swing.JComponent;
 
@@ -27,8 +29,9 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 	public static void main(String args[]){
 		
 		System.out.println("Pls input the file name:");
-		input = new Scanner(System.in);
-		g1 = new graph(input.nextLine());
+//		input = new Scanner(System.in);
+//		g1 = new graph(input.nextLine())
+		g1 = new graph("test");
 		image = g1.getP();
 		g1.showImg();
 		pixels = g1.getImageGRB();
@@ -68,7 +71,7 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
     		int source;
     		int sink;
     		int flow;
-    		int[][] graph;
+    		List<List<Integer>> graph = new ArrayList<List<Integer>>();
     		
     		int width = g1.getW(), high = g1.getH();
     		int[][] o = new int[width][high];
@@ -112,7 +115,16 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
     		w.findTeble();
     		
     		nodeNum = width * high + 2;
-    		graph = new int[nodeNum][nodeNum];
+    		for (int i = 0; i < nodeNum; i++) {
+    			List<Integer> temp = new ArrayList<Integer>();
+    			List<Integer> t = new ArrayList<Integer>();
+    			graph.add(temp);
+    			for (int j = 0; j < nodeNum; j++) {
+    				t.add(0);
+				}
+    			graph.get(i).addAll(t);
+			}
+    		
     		graph = w.findTeble();
     		source = 0;
     		sink = width * high + 1;
