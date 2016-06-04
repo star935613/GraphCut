@@ -17,11 +17,12 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 {
 
 	private int step = 1,click = 1;
-	public ArrayList<Point> pointL;
-	public ArrayList<Point> pointR;
+	public ArrayList<Point> pointL = new ArrayList();
+	public ArrayList<Point> pointR = new ArrayList();
 	static BufferedImage image = null;
 	static int[][] pixels = null;
  	private	final Point A_BREAK = new Point(-1,-1);
+ 	private Point p;
  	
  	static JFrame A = new JFrame();
 	static Scanner input;
@@ -50,8 +51,6 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 	}
 
 	public test(){
-		pointL = new ArrayList();
-		pointR = new ArrayList();
 		super.addMouseListener(this);
 		super.addMouseMotionListener(this);
 
@@ -66,78 +65,75 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
         String cmd = e.getActionCommand();
         if (cmd == "b1") {
 //            System.out.println("R: ");
-//           
-        	int nodeNum;
-    		int source;
-    		int sink;
-    		int flow;
-    		List<List<Integer>> graph = new ArrayList<List<Integer>>();
+           
     		
     		int width = g1.getW(), high = g1.getH();
-    		int[][] o = new int[width][high];
-//	    		= {{240,	227,	74},
-//    				{204,	240,	51},
-//    				{227,	36,	74}};
+    		int[][] o //= new int[width][high];
+	    		= {{240,	227,	74},
+    				{204,	240,	51},
+    				{227,	36,	74}};
     		
-    		for (int i = 0; i < width; i++) {
-    			for (int j = 0; j < high; j++) {
-    				o[i][j] = (pixels[i][j] >> 16) & 0xff;
-    			}
-    		}
+//    		for (int i = 0; i < width; i++) {
+//    			for (int j = 0; j < high; j++) {
+//    				o[i][j] = (pixels[i][j] >> 16) & 0xff;
+//    			}
+//    		}
     		
     		System.out.println("Start Cutting");
     		weight w = new weight();
-    		w.setW(width);
-    		w.setH(high);
-    		 for(int i=0; i<pointR.size()-1; i++){
-             	Point p=(Point)pointR.get(i);
-             	if(!p.equals(A_BREAK))
-             		w.setL(p);
-             }
-             System.out.println("L: ");
-             for(int i=0; i<pointL.size()-1; i++){
-             	Point p=(Point)pointL.get(i);
-             	if(!p.equals(A_BREAK))
-             		w.setR(p);
-             }
+    		
+    		//設置長寬用
+//    		w.setW(width);
+//    		w.setH(high);
+    		w.setW(3);
+    		w.setH(3);
+    		//------
+    		
+    		//設置劃線的點
+//    		 for(int i=0; i<pointR.size()-1; i++){
+//             	Point p=(Point)pointR.get(i);
+//             	if(!p.equals(A_BREAK))
+//             		w.setL(p);
+//             }
+//             System.out.println("L: ");
+//             for(int i=0; i<pointL.size()-1; i++){
+//             	Point p=(Point)pointL.get(i);
+//             	if(!p.equals(A_BREAK))
+//             		w.setR(p);
+//             }
+    		p = new Point(2,0);
+    		w.setL(p);
+    		p = new Point(0,2);
+    		w.setR(p);
+    		//------
+    		
     		w.setOriginal(o);
+    		
     		
     		System.out.println("Start findSigma");
     		w.findSigma();
     		System.out.println("Start initWeight");
-    		w.initWeight();
+    		w.initWeightInteger();
     		System.out.println("Start findWeights");
-    		w.findWeights();
+//    		w.findWeights();
     		
-    		System.out.println("Start initTable");
-    		w.initTable();
-    		System.out.println("Start findTeble");
-    		w.findTeble();
+    		int nodeNum;
+    		int flow;
     		
-    		nodeNum = width * high + 2;
-    		for (int i = 0; i < nodeNum; i++) {
-    			List<Integer> temp = new ArrayList<Integer>();
-    			List<Integer> t = new ArrayList<Integer>();
-    			graph.add(temp);
-    			for (int j = 0; j < nodeNum; j++) {
-    				t.add(0);
-				}
-    			graph.get(i).addAll(t);
-			}
+    		List<List<List<Integer>>> graph;
+    		graph = w.findWeightsInteger();
     		
-    		graph = w.findTeble();
-    		source = 0;
-    		sink = width * high + 1;
-    		maxflow maxflowA = new maxflow(nodeNum);
-    		flow = maxflowA.maxflow(graph,source,sink);
+    		System.out.println("Start printWeightInteger");
+    		w.printWeightInteger();
+
+    		maxflow maxflowA = new maxflow(width*high*6, width, high);
+    		flow = maxflowA.maxflow(graph);
     		System.out.println("Max flow = " + flow);
         }
     }
 
 	public int choosePixels(int x, int y)
    	{
-//   		printPixelARGB(x, y, pixels[x][y]);
-//   		System.out.println(pixels[x][y]);
    		return pixels[x][y];
    	}
 
