@@ -92,7 +92,7 @@ public class maxflow
 			return 5;
 	}
 	//bfs -- s->t
-	public boolean bfS(List<List<List<Integer>>> residual)   
+	public boolean bfS(List<List<List<Double>>> residual)   
 	{
 		int destination, now, start;
 		int nextNode;
@@ -117,7 +117,7 @@ public class maxflow
 				{
 				//	System.out.println("2");
 					nextNode = destinationN(now, destination);
-					System.out.println(now + " " + destination + " " + residual.get((int)now/3).get((int)now%3).get(destination));
+					System.out.println(now + " " + nextNode + " " + destination + " " + residual.get((int)now/3).get((int)now%3).get(destination));
 					if(nextNode == nodeNum && residual.get((int)now/3).get((int)now%3).get(5)>0){
 				//		System.out.println("4");
 						foundPath = true;
@@ -176,10 +176,10 @@ public class maxflow
 
 	}
 	*/
-	public int maxflow(List<List<List<Integer>>> graph)
+	public int maxflow(List<List<List<Double>>> graph)
  	{	
- 		List<List<List<Integer>>> residual;
- 		int path;
+ 		List<List<List<Double>>> residual;
+ 		double path;
  		int maxF = 0;
  		int vertex;
 

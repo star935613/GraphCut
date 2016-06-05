@@ -113,18 +113,18 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
     		System.out.println("Start findSigma");
     		w.findSigma();
     		System.out.println("Start initWeight");
-    		w.initWeightInteger();
+    		w.initWeightDouble();
     		System.out.println("Start findWeights");
 //    		w.findWeights();
     		
     		int nodeNum;
     		int flow;
     		
-    		List<List<List<Integer>>> graph;
-    		graph = w.findWeightsInteger();
+    		List<List<List<Double>>> graph;
+    		graph = w.findWeightDouble();
     		
-    		System.out.println("Start printWeightInteger");
-    		w.printWeightInteger();
+    		System.out.println("Start printWeightDouble");
+    		w.printWeightDouble();
 
     		maxflow maxflowA = new maxflow(width*high*6, width, high);
     		flow = maxflowA.maxflow(graph);
