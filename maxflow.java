@@ -262,7 +262,6 @@ public class maxflow
 		}
 		
 		//turn to cut	
-		System.out.println(residual.get(2).get(0).get(0));
 		for(vertex = 0; vertex < nodeNum; vertex++)
 		{		
 		
