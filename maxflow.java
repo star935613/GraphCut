@@ -113,7 +113,7 @@ public class maxflow
 				now = queue.poll();
 				destination = 1;
 
-				while(destination < 10)
+				while(destination < 6)
 				{
 				//	System.out.println("2");
 					nextNode = destinationN(now, destination);

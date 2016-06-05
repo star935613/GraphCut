@@ -83,9 +83,7 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
     		System.out.println("Start Cutting");
     		weight w = new weight();
     		
-    		//Set Widthk, high
-//    		w.setW(width);
-//    		w.setH(high);
+    		//Set Width, high
     		w.setW(width);
     		w.setH(high);
     		//------
