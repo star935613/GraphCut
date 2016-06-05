@@ -1,4 +1,5 @@
 import java.awt.Point;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 //import java.util.Scanner;
@@ -156,16 +157,16 @@ class weight {//extends temp{
 				if (i == pL.x && j == pL.y) {
 //					System.out.println("L (" + i + ", " + j + ")");
 					if (i - 1 >= 0) {	//上
-						sumUp = weightsDouble.get(i-1).get(j).get(0) + weightsDouble.get(i-1).get(j).get(1) + weightsDouble.get(i-1).get(j).get(2) + weightsDouble.get(i-1).get(j).get(3);
+						sumUp = weightsDouble.get(i-1).get(j).get(4) + weightsDouble.get(i-1).get(j).get(1) + weightsDouble.get(i-1).get(j).get(2) + weightsDouble.get(i-1).get(j).get(3);
 					}
 					if (j - 1 >= 0) {	//左
-						sumL = weightsDouble.get(i).get(j-1).get(0) + weightsDouble.get(i).get(j-1).get(1) + weightsDouble.get(i).get(j-1).get(2) + weightsDouble.get(i).get(j-1).get(3);
+						sumL = weightsDouble.get(i).get(j-1).get(4) + weightsDouble.get(i).get(j-1).get(1) + weightsDouble.get(i).get(j-1).get(2) + weightsDouble.get(i).get(j-1).get(3);
 					}
 					if (i + 1 < h) {	//下
-						sumDown = weightsDouble.get(i+1).get(j).get(0) + weightsDouble.get(i+1).get(j).get(1) + weightsDouble.get(i+1).get(j).get(2) + weightsDouble.get(i+1).get(j).get(3);
+						sumDown = weightsDouble.get(i+1).get(j).get(4) + weightsDouble.get(i+1).get(j).get(1) + weightsDouble.get(i+1).get(j).get(2) + weightsDouble.get(i+1).get(j).get(3);
 					}
 					if (j + 1 < w) {	//右
-						 sumR = weightsDouble.get(i).get(j+1).get(0) + weightsDouble.get(i).get(j+1).get(1) + weightsDouble.get(i).get(j+1).get(2) + weightsDouble.get(i).get(j+1).get(3);
+						 sumR = weightsDouble.get(i).get(j+1).get(4) + weightsDouble.get(i).get(j+1).get(1) + weightsDouble.get(i).get(j+1).get(2) + weightsDouble.get(i).get(j+1).get(3);
 					}
 
 					weightsDouble.get(i).get(j).set(0, 1 + Math.max( Math.max(sumUp, sumL), Math.max(sumDown, sumR) ));
@@ -174,16 +175,16 @@ class weight {//extends temp{
 				else if (i == pR.x && j == pR.y) {
 //					System.out.println("R (" + i + ", " + j + ")");
 					if (i - 1 >= 0) {	//上
-						sumUp = weightsDouble.get(i-1).get(j).get(0) + weightsDouble.get(i-1).get(j).get(1) + weightsDouble.get(i-1).get(j).get(2) + weightsDouble.get(i-1).get(j).get(3);
+						sumUp = weightsDouble.get(i-1).get(j).get(4) + weightsDouble.get(i-1).get(j).get(1) + weightsDouble.get(i-1).get(j).get(2) + weightsDouble.get(i-1).get(j).get(3);
 					}	
 					if (j - 1 >= 0) {	//左
-						sumL = weightsDouble.get(i).get(j-1).get(0) + weightsDouble.get(i).get(j-1).get(1) + weightsDouble.get(i).get(j-1).get(2) + weightsDouble.get(i).get(j-1).get(3);
+						sumL = weightsDouble.get(i).get(j-1).get(4) + weightsDouble.get(i).get(j-1).get(1) + weightsDouble.get(i).get(j-1).get(2) + weightsDouble.get(i).get(j-1).get(3);
 					}
 					if (i + 1 < h) {	//下
-						sumDown = weightsDouble.get(i+1).get(j).get(0) + weightsDouble.get(i+1).get(j).get(1) + weightsDouble.get(i+1).get(j).get(2) + weightsDouble.get(i+1).get(j).get(3);
+						sumDown = weightsDouble.get(i+1).get(j).get(4) + weightsDouble.get(i+1).get(j).get(1) + weightsDouble.get(i+1).get(j).get(2) + weightsDouble.get(i+1).get(j).get(3);
 					}
 					if (j + 1 < w) {	//右
-						 sumR = weightsDouble.get(i).get(j+1).get(0) + weightsDouble.get(i).get(j+1).get(1) + weightsDouble.get(i).get(j+1).get(2) + weightsDouble.get(i).get(j+1).get(3);
+						 sumR = weightsDouble.get(i).get(j+1).get(4) + weightsDouble.get(i).get(j+1).get(1) + weightsDouble.get(i).get(j+1).get(2) + weightsDouble.get(i).get(j+1).get(3);
 					}
 					weightsDouble.get(i).get(j).set(0, (double) 0);
 					weightsDouble.get(i).get(j).set(5, 1 + Math.max( Math.max(sumUp, sumL), Math.max(sumDown, sumR) ));
@@ -318,14 +319,17 @@ class weight {//extends temp{
 	}
 	
 	void printWeightDouble() {
+		
+		DecimalFormat df = new DecimalFormat("0.00");
+		
 		for (int i = 0; i < w; i++) {
 			for (int j = 0; j < h; j++) {
-				System.out.print("	(" + i + " "+ j + ") " +"上" + " " + weightsDouble.get(i).get(j).get(0));
-				System.out.print("	(" + i + " "+ j + ") " +"下" + " " + weightsDouble.get(i).get(j).get(1));
-				System.out.print("	(" + i + " "+ j + ") " +"左" + " " + weightsDouble.get(i).get(j).get(2));
-				System.out.print("	(" + i + " "+ j + ") " +"右" + " " + weightsDouble.get(i).get(j).get(3));
-				System.out.print("	(" + i + " "+ j + ") " +"S" + " " + weightsDouble.get(i).get(j).get(4));
-				System.out.print("	(" + i + " "+ j + ") " +"T" + " " + weightsDouble.get(i).get(j).get(5));
+				System.out.print("	(" + i + " "+ j + ") " +"上" + " " + df.format(weightsDouble.get(i).get(j).get(0)));
+				System.out.print("	(" + i + " "+ j + ") " +"下" + " " + df.format(weightsDouble.get(i).get(j).get(1)));
+				System.out.print("	(" + i + " "+ j + ") " +"左" + " " + df.format(weightsDouble.get(i).get(j).get(2)));
+				System.out.print("	(" + i + " "+ j + ") " +"右" + " " + df.format(weightsDouble.get(i).get(j).get(3)));
+				System.out.print("	(" + i + " "+ j + ") " +"S" + " " + df.format(weightsDouble.get(i).get(j).get(4)));
+				System.out.print("	(" + i + " "+ j + ") " +"T" + " " + df.format(weightsDouble.get(i).get(j).get(5)));
 				System.out.println();
 			}
 		}
