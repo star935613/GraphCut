@@ -117,7 +117,7 @@ public class maxflow
 				{
 				//	System.out.println("2");
 					nextNode = destinationN(now, destination);
-					System.out.println(now + " " + nextNode + " " + destination + " " + residual.get((int)now/3).get((int)now%3).get(destination));
+				//	System.out.println(now + " " + nextNode + " " + destination + " " + residual.get((int)now/3).get((int)now%3).get(destination));
 					if(nextNode == nodeNum && residual.get((int)now/3).get((int)now%3).get(5)>0){
 				//		System.out.println("4");
 						foundPath = true;
@@ -265,16 +265,16 @@ public class maxflow
 		
 			if(BFS(residual, vertex)){
 				sourceVertex.add(vertex);
-			//	System.out.println("S");
+				System.out.println("S");
 			}
 			else{
 				sinkVertex.add(vertex);
-			//	System.out.println("T");
+				System.out.println("T");
 			}
 		
 		
 		}
-		
+/*		
 		for (int a = 0; a < sourceVertex.size(); a++) 
 		{
 			for(int b = 0; b < sinkVertex.size(); b++)
@@ -288,7 +288,7 @@ public class maxflow
 			}
 		}
 
-
+*/
 		return maxF;
  	}
 
