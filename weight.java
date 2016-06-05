@@ -324,12 +324,13 @@ class weight {//extends temp{
 		
 		for (int i = 0; i < w; i++) {
 			for (int j = 0; j < h; j++) {
-				System.out.print("	(" + i + " "+ j + ") " +"上" + " " + df.format(weightsDouble.get(i).get(j).get(0)));
-				System.out.print("	(" + i + " "+ j + ") " +"下" + " " + df.format(weightsDouble.get(i).get(j).get(1)));
-				System.out.print("	(" + i + " "+ j + ") " +"左" + " " + df.format(weightsDouble.get(i).get(j).get(2)));
-				System.out.print("	(" + i + " "+ j + ") " +"右" + " " + df.format(weightsDouble.get(i).get(j).get(3)));
-				System.out.print("	(" + i + " "+ j + ") " +"S" + " " + df.format(weightsDouble.get(i).get(j).get(4)));
-				System.out.print("	(" + i + " "+ j + ") " +"T" + " " + df.format(weightsDouble.get(i).get(j).get(5)));
+				System.out.print("	(" + i + " "+ j + ") " + i*3+j +"S" + " " + df.format(weightsDouble.get(i).get(j).get(0)));
+				System.out.print("	");
+				System.out.print("	上" + " " + df.format(weightsDouble.get(i).get(j).get(1)));
+				System.out.print("	下" + " " + df.format(weightsDouble.get(i).get(j).get(2)));
+				System.out.print("	左" + " " + df.format(weightsDouble.get(i).get(j).get(3)));
+				System.out.print("	右" + " " + df.format(weightsDouble.get(i).get(j).get(4)));
+				System.out.print("	T" + " " + df.format(weightsDouble.get(i).get(j).get(5)));
 				System.out.println();
 			}
 		}

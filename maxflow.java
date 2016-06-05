@@ -142,6 +142,52 @@ public class maxflow
 		return foundPath;
 
 	}
+	
+	public boolean BFS(List<List<List<Double>>> residual, int end)   
+	{
+		int destination, now, start;
+		int nextNode;
+		boolean foundPath = false;		
+		init();
+
+		for(int x = 0; x < nodeNum; x++){
+			if(residual.get((int)x/3).get((int)x%3).get(0) <= 0)
+				continue; 
+		//	System.out.println(foundPath);
+			start = x;
+			queue.offer(start);			
+			visit[start] = true;
+			
+			while(!queue.isEmpty())
+			{
+			//	System.out.println("1");
+				now = queue.poll();
+				destination = 1;
+
+				while(destination < 6)
+				{
+				//	System.out.println("2");
+					nextNode = destinationN(now, destination);
+					if(nextNode == nodeNum && residual.get((int)now/3).get((int)now%3).get(5)>0){			
+						return foundPath;				
+					}
+					else if(residual.get((int)now/3).get((int)now%3).get(destination) > 0 && !visit[nextNode])
+					{
+						if(nextNode == end)
+							return true;
+						head[nextNode] = now;
+						queue.offer(nextNode);
+						visit[nextNode] = true;
+					}
+					destination++;
+				}
+
+			}
+		}
+
+		return foundPath;
+
+	}
 /*
 	public boolean bfs(int[][] residual, int dest){	
 		int destination, now, start;
@@ -212,14 +258,12 @@ public class maxflow
 			residual.get((int)afterSource/3).get((int)afterSource%3).set(0, residual.get((int)afterSource/3).get((int)afterSource%3).get(0) - path);	
 			maxF += path;	
 		}
-		/*
-
+		
 		//turn to cut	
 		for(vertex = 0; vertex < nodeNum; vertex++)
-		{
-			
+		{		
 		
-			if(bfs(residual, vertex)){
+			if(BFS(residual, vertex)){
 				sourceVertex.add(vertex);
 			//	System.out.println("S");
 			}
@@ -227,23 +271,23 @@ public class maxflow
 				sinkVertex.add(vertex);
 			//	System.out.println("T");
 			}
-
-
+		
+		
 		}
-
+		
 		for (int a = 0; a < sourceVertex.size(); a++) 
 		{
 			for(int b = 0; b < sinkVertex.size(); b++)
 			{
-				if(graph[sourceVertex.get(a)][relation(sourceVertex.get(a), sinkVertex.get(b))] > 0)
+				if(graph.get((int)sourceVertex.get(a)/3).get((int)sourceVertex.get(a)%3).get(relation(sourceVertex.get(a), sinkVertex.get(b))) > 0)
 					System.out.println(sourceVertex.get(a) + "-" + sinkVertex.get(b));
-				else if(graph[sinkVertex.get(b)][relation(sinkVertex.get(b), sourceVertex.get(a))] > 0)
+				else if(graph.get((int)sinkVertex.get(b)/3).get((int)sinkVertex.get(b)%3).get(relation(sinkVertex.get(b), sourceVertex.get(a))) > 0)
 					System.out.println(sinkVertex.get(b) + "-" + sourceVertex.get(a));
 						
 				
 			}
 		}
-*/
+
 
 		return maxF;
  	}

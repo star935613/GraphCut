@@ -180,7 +180,7 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
  	public void mouseClicked(MouseEvent e){}
 
  	public void paint(Graphics g){
- 		int x1 = -1, x2 = -1, y1 = -1, y2 =-1;
+// 		int x1 = -1, x2 = -1, y1 = -1, y2 =-1;
  		Graphics2D g2 = (Graphics2D)g;
  		super.paint(g2);
  		g2.drawImage(image, null, null);
