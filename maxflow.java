@@ -155,6 +155,8 @@ public class maxflow
 				continue; 
 		//	System.out.println(foundPath);
 			start = x;
+			if(start == end)
+				return true;
 			queue.offer(start);			
 			visit[start] = true;
 			
@@ -260,6 +262,7 @@ public class maxflow
 		}
 		
 		//turn to cut	
+		System.out.println(residual.get(2).get(0).get(0));
 		for(vertex = 0; vertex < nodeNum; vertex++)
 		{		
 		
@@ -274,7 +277,7 @@ public class maxflow
 		
 		
 		}
-/*		
+	/*	
 		for (int a = 0; a < sourceVertex.size(); a++) 
 		{
 			for(int b = 0; b < sinkVertex.size(); b++)
@@ -288,7 +291,7 @@ public class maxflow
 			}
 		}
 
-*/
+  */
 		return maxF;
  	}
 
