@@ -67,7 +67,8 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 //            System.out.println("R: ");
            
     		
-    		int width = g1.getW(), high = g1.getH();
+//    		int width = g1.getW(), high = g1.getH();
+        	int width = 3, high = 3;
     		int[][] o //= new int[width][high];
 	    		= {{240,	227,	74},
     				{204,	240,	51},
@@ -82,14 +83,14 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
     		System.out.println("Start Cutting");
     		weight w = new weight();
     		
-    		//設置長寬用
+    		//Set Widthk, high
 //    		w.setW(width);
 //    		w.setH(high);
-    		w.setW(3);
-    		w.setH(3);
+    		w.setW(width);
+    		w.setH(high);
     		//------
     		
-    		//設置劃線的點
+    		//Set line point
 //    		 for(int i=0; i<pointR.size()-1; i++){
 //             	Point p=(Point)pointR.get(i);
 //             	if(!p.equals(A_BREAK))
@@ -126,7 +127,7 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
     		System.out.println("Start printWeightDouble");
     		w.printWeightDouble();
 
-    		maxflow maxflowA = new maxflow(width*high*6, width, high);
+    		maxflow maxflowA = new maxflow(width*high, width, high);
     		flow = maxflowA.maxflow(graph);
     		System.out.println("Max flow = " + flow);
         }
