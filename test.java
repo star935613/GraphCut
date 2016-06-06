@@ -43,7 +43,7 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 		A.add(lblimage, BorderLayout.CENTER);
 
 		A.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		A.setSize(g1.getW(), g1.getH());
+		A.setSize(g1.getW()+50, g1.getH()+50);
 		A.setLocation(g1.getW() + 100 , 0);
 		test B = new test();
 		A.add(B);
@@ -67,18 +67,18 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 //            System.out.println("R: ");
            
     		
-//    		int width = g1.getW(), high = g1.getH();
-        	int width = 3, high = 3;
-    		int[][] o //= new int[width][high];
-	    		= {{240,	227,	74},
-    				{204,	240,	51},
-    				{227,	36,	74}};
+    		int width = g1.getW(), high = g1.getH();
+//        	int width = 3, high = 3;
+    		int[][] o = new int[width][high];
+//	    		= {{240,	227,	74},
+//    				{204,	240,	51},
+//    				{227,	36,	74}};
     		
-//    		for (int i = 0; i < width; i++) {
-//    			for (int j = 0; j < high; j++) {
-//    				o[i][j] = (pixels[i][j] >> 16) & 0xff;
-//    			}
-//    		}
+    		for (int i = 0; i < width; i++) {
+    			for (int j = 0; j < high; j++) {
+    				o[i][j] = (pixels[i][j] >> 16) & 0xff;
+    			}
+    		}
     		
     		System.out.println("Start Cutting");
     		weight w = new weight();
@@ -89,21 +89,21 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
     		//------
     		
     		//Set line point
-//    		 for(int i=0; i<pointR.size()-1; i++){
-//             	Point p=(Point)pointR.get(i);
-//             	if(!p.equals(A_BREAK))
-//             		w.setL(p);
-//             }
-//             System.out.println("L: ");
-//             for(int i=0; i<pointL.size()-1; i++){
-//             	Point p=(Point)pointL.get(i);
-//             	if(!p.equals(A_BREAK))
-//             		w.setR(p);
-//             }
-    		p = new Point(2,0);
-    		w.setL(p);
-    		p = new Point(0,2);
-    		w.setR(p);
+    		 for(int i=0; i<pointR.size()-1; i++){
+             	Point p=(Point)pointR.get(i);
+             	if(!p.equals(A_BREAK))
+             		w.setL(p);
+             }
+             System.out.println("L: ");
+             for(int i=0; i<pointL.size()-1; i++){
+             	Point p=(Point)pointL.get(i);
+             	if(!p.equals(A_BREAK))
+             		w.setR(p);
+             }
+//    		p = new Point(2,0);
+//    		w.setL(p);
+//    		p = new Point(0,2);
+//    		w.setR(p);
     		//------
     		
     		w.setOriginal(o);
@@ -122,8 +122,8 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
     		List<List<List<Double>>> graph;
     		graph = w.findWeightDouble();
     		
-    		System.out.println("Start printWeightDouble");
-    		w.printWeightDouble();
+//    		System.out.println("Start printWeightDouble");
+//    		w.printWeightDouble();
 
     		maxflow maxflowA = new maxflow(width*high, width, high);
     		flow = maxflowA.maxflow(graph);
@@ -180,7 +180,7 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
  	public void mouseClicked(MouseEvent e){}
 
  	public void paint(Graphics g){
-// 		int x1 = -1, x2 = -1, y1 = -1, y2 =-1;
+ 		int x1 = -1, x2 = -1, y1 = -1, y2 =-1;
  		Graphics2D g2 = (Graphics2D)g;
  		super.paint(g2);
  		g2.drawImage(image, null, null);

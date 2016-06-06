@@ -100,7 +100,7 @@ public class maxflow
 		init();
 
 		for(int x = 0; x < nodeNum; x++){
-			if(residual.get((int)x/3).get((int)x%3).get(0) <= 0)
+			if(residual.get((int)x/wide).get((int)x%wide).get(0) <= 0)
 				continue; 
 		//	System.out.println(foundPath);
 			start = x;
@@ -117,8 +117,8 @@ public class maxflow
 				{
 				//	System.out.println("2");
 					nextNode = destinationN(now, destination);
-					System.out.println(now + " " + nextNode + " " + destination + " " + residual.get((int)now/3).get((int)now%3).get(destination));
-					if(nextNode == nodeNum && residual.get((int)now/3).get((int)now%3).get(5)>0){
+				//	System.out.println(now + " " + nextNode + " " + destination + " " + residual.get((int)now/wide).get((int)now%wide).get(destination));
+					if(nextNode == nodeNum && residual.get((int)now/wide).get((int)now%wide).get(5)>0){
 				//		System.out.println("4");
 						foundPath = true;
 						preSink = now;
@@ -126,7 +126,7 @@ public class maxflow
 						afterSource = start;
 						return foundPath;				
 					}
-					else if(residual.get((int)now/3).get((int)now%3).get(destination) > 0 && !visit[nextNode])
+					else if(residual.get((int)now/wide).get((int)now%wide).get(destination) > 0 && !visit[nextNode])
 					{
 				//		System.out.println("3");
 						head[nextNode] = now;
@@ -151,10 +151,12 @@ public class maxflow
 		init();
 
 		for(int x = 0; x < nodeNum; x++){
-			if(residual.get((int)x/3).get((int)x%3).get(0) <= 0)
+			if(residual.get((int)x/wide).get((int)x%wide).get(0) <= 0)
 				continue; 
 		//	System.out.println(foundPath);
 			start = x;
+			if(start == end)
+				return true;
 			queue.offer(start);			
 			visit[start] = true;
 			
@@ -168,10 +170,10 @@ public class maxflow
 				{
 				//	System.out.println("2");
 					nextNode = destinationN(now, destination);
-					if(nextNode == nodeNum && residual.get((int)now/3).get((int)now%3).get(5)>0){			
+					if(nextNode == nodeNum && residual.get((int)now/wide).get((int)now%wide).get(5)>0){			
 						return foundPath;				
 					}
-					else if(residual.get((int)now/3).get((int)now%3).get(destination) > 0 && !visit[nextNode])
+					else if(residual.get((int)now/wide).get((int)now%wide).get(destination) > 0 && !visit[nextNode])
 					{
 						if(nextNode == end)
 							return true;
@@ -239,23 +241,23 @@ public class maxflow
 		{	
 		//	System.out.println("123");
 			path = Integer.MAX_VALUE;
-			path = Math.min(path,residual.get((int)preSink/3).get((int)preSink%3).get(5));
+			path = Math.min(path,residual.get((int)preSink/wide).get((int)preSink%wide).get(5));
 //			System.out.println(preSink+"->T=" + residual[preSink][9]);
 			for(vertex = preSink;vertex!= afterSource;vertex = head[vertex] )
 			{	
-				path = Math.min(path, residual.get((int)head[vertex]/3).get((int)head[vertex]%3).get(relation(head[vertex], vertex)));
+				path = Math.min(path, residual.get((int)head[vertex]/wide).get((int)head[vertex]%wide).get(relation(head[vertex], vertex)));
 //				System.out.println(head[vertex] + "->" + vertex + " = " +residual[head[vertex]][relation(head[vertex], vertex)]+" "+head[vertex]+" ,"+relation(head[vertex], vertex));
 			}
-			path = Math.min(path, residual.get((int)afterSource/3).get((int)afterSource%3).get(0));
+			path = Math.min(path, residual.get((int)afterSource/wide).get((int)afterSource%wide).get(0));
 //			System.out.println("S->afterSource=" + residual[afterSource][0]);
-			residual.get((int)preSink/3).get((int)preSink%3).set(5, residual.get((int)preSink/3).get((int)preSink%3).get(5) - path);
+			residual.get((int)preSink/wide).get((int)preSink%wide).set(5, residual.get((int)preSink/wide).get((int)preSink%wide).get(5) - path);
 //			residual.get(1).get(1).get(1) -= path;
 			for(vertex = preSink; vertex!= afterSource;vertex = head[vertex])
 			{
-				residual.get((int)head[vertex]/3).get((int)head[vertex]%3).set(relation(head[vertex], vertex), residual.get((int)head[vertex]/3).get((int)head[vertex]%3).get(relation(head[vertex], vertex)) - path);
-				residual.get((int)vertex/3).get((int)vertex%3).set(relation(vertex, head[vertex]), residual.get((int)vertex/3).get((int)vertex%3).get(relation(vertex, head[vertex])) + path);			
+				residual.get((int)head[vertex]/wide).get((int)head[vertex]%wide).set(relation(head[vertex], vertex), residual.get((int)head[vertex]/wide).get((int)head[vertex]%wide).get(relation(head[vertex], vertex)) - path);
+				residual.get((int)vertex/wide).get((int)vertex%wide).set(relation(vertex, head[vertex]), residual.get((int)vertex/wide).get((int)vertex%wide).get(relation(vertex, head[vertex])) + path);			
 			}
-			residual.get((int)afterSource/3).get((int)afterSource%3).set(0, residual.get((int)afterSource/3).get((int)afterSource%3).get(0) - path);	
+			residual.get((int)afterSource/wide).get((int)afterSource%wide).set(0, residual.get((int)afterSource/wide).get((int)afterSource%wide).get(0) - path);	
 			maxF += path;	
 		}
 		
@@ -265,30 +267,32 @@ public class maxflow
 		
 			if(BFS(residual, vertex)){
 				sourceVertex.add(vertex);
-			//	System.out.println("S");
+				System.out.printf("S");
 			}
 			else{
 				sinkVertex.add(vertex);
-			//	System.out.println("T");
+				System.out.printf("T");
+			}
+			if ((vertex+1) % wide == 0 ){
+				System.out.println("");
 			}
 		
-		
 		}
-		
+	/*	
 		for (int a = 0; a < sourceVertex.size(); a++) 
 		{
 			for(int b = 0; b < sinkVertex.size(); b++)
 			{
-				if(graph.get((int)sourceVertex.get(a)/3).get((int)sourceVertex.get(a)%3).get(relation(sourceVertex.get(a), sinkVertex.get(b))) > 0)
+				if(graph.get((int)sourceVertex.get(a)/wide).get((int)sourceVertex.get(a)%wide).get(relation(sourceVertex.get(a), sinkVertex.get(b))) > 0)
 					System.out.println(sourceVertex.get(a) + "-" + sinkVertex.get(b));
-				else if(graph.get((int)sinkVertex.get(b)/3).get((int)sinkVertex.get(b)%3).get(relation(sinkVertex.get(b), sourceVertex.get(a))) > 0)
+				else if(graph.get((int)sinkVertex.get(b)/wide).get((int)sinkVertex.get(b)%wide).get(relation(sinkVertex.get(b), sourceVertex.get(a))) > 0)
 					System.out.println(sinkVertex.get(b) + "-" + sourceVertex.get(a));
 						
 				
 			}
 		}
 
-
+  */
 		return maxF;
  	}
 

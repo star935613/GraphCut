@@ -87,7 +87,7 @@ class weight {//extends temp{
 	void findSigma() {
 		double sum = 0;
 		double squareSum = 0;
-//		 int alpha, red, green, blue;
+		 int alpha, red, green, blue;
 
 		for (int i = 0; i < w; i++) {
 			for (int j = 0; j < h; j++) {
@@ -96,9 +96,11 @@ class weight {//extends temp{
 //				 red = (choosePixels(i, j) >> 16) & 0xff;
 //				 green = (choosePixels(i, j) >> 8) & 0xff;
 //				 blue = (choosePixels(i, j)) & 0xff;
-				System.out.println(sum);
+//				System.out.println(sum + " " + red + " " + choosePixels(i, j));
 				sum = sum + original[i][j];
 				squareSum = squareSum + Math.pow(original[i][j], 2);
+//				sum = sum + red;
+//				squareSum = squareSum + Math.pow(red, 2);
 			}
 		}
 		squareSum = squareSum / (w * h);
