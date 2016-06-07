@@ -87,7 +87,7 @@ class weight {//extends temp{
 	void findSigma() {
 		double sum = 0;
 		double squareSum = 0;
-		 int alpha, red, green, blue;
+//		 int alpha, red, green, blue;
 
 		for (int i = 0; i < w; i++) {
 			for (int j = 0; j < h; j++) {
@@ -96,11 +96,9 @@ class weight {//extends temp{
 //				 red = (choosePixels(i, j) >> 16) & 0xff;
 //				 green = (choosePixels(i, j) >> 8) & 0xff;
 //				 blue = (choosePixels(i, j)) & 0xff;
-//				System.out.println(sum + " " + red + " " + choosePixels(i, j));
+//				System.out.println(sum);
 				sum = sum + original[i][j];
 				squareSum = squareSum + Math.pow(original[i][j], 2);
-//				sum = sum + red;
-//				squareSum = squareSum + Math.pow(red, 2);
 			}
 		}
 		squareSum = squareSum / (w * h);
@@ -301,23 +299,6 @@ class weight {//extends temp{
 		}
 
 		return weightsInteger;
-	}
-
-
-	void printWeightInteger() {
-			for (int i = 0; i < w; i++) {
-				for (int j = 0; j < h; j++) {
-					System.out.print("	(" + i + " "+ j + ") " +"上" + " " + weightsInteger.get(i).get(j).get(0));
-					System.out.print("	(" + i + " "+ j + ") " +"下" + " " + weightsInteger.get(i).get(j).get(1));
-					System.out.print("	(" + i + " "+ j + ") " +"左" + " " + weightsInteger.get(i).get(j).get(2));
-					System.out.print("	(" + i + " "+ j + ") " +"右" + " " + weightsInteger.get(i).get(j).get(3));
-					System.out.print("	(" + i + " "+ j + ") " +"S" + " " + weightsInteger.get(i).get(j).get(4));
-					System.out.print("	(" + i + " "+ j + ") " +"T" + " " + weightsInteger.get(i).get(j).get(5));
-					System.out.println();
-				}
-			}
-			
-		System.out.println();
 	}
 	
 	void printWeightDouble() {

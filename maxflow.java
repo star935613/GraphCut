@@ -296,32 +296,4 @@ public class maxflow
 		return maxF;
  	}
 
-//	public static void main(String[] args)
-//	{
-//		int nodeNum;
-//		int flow;
-//		int height;
-//		int wide;
-//		int[][] graph;
-//		System.out.println("Plz input node number: ");
-//		Scanner input = new Scanner(System.in);
-//		nodeNum = input.nextInt();
-//		graph = new int[nodeNum][6];
-//		System.out.println("Plz input graph height: ");
-//		height = input.nextInt();		
-//		System.out.println("Plz input graph wide: ");
-//		wide = input.nextInt();
-//		System.out.println("Plz input graph: ");
-//		// a->b
-//		for(int a = 0; a < nodeNum; a++)
-//		{
-//			for(int b = 0; b < 6; b++)
-//				graph[a][b] = input.nextInt();
-//		}
-//
-//		maxflow maxflowA = new maxflow(nodeNum, wide, height);
-//		flow = maxflowA.maxflow(graph);
-//		System.out.println("Max flow = " + flow);
-//	}
-
 }

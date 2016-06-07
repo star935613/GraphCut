@@ -64,29 +64,29 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 	public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
         if (cmd == "b1") {
-//            System.out.println("R: ");
            
-    		
+    		//Set width, high
     		int width = g1.getW(), high = g1.getH();
 //        	int width = 3, high = 3;
+        	//------
+        	
+        	//Set Original
     		int[][] o = new int[width][high];
 //	    		= {{240,	227,	74},
 //    				{204,	240,	51},
 //    				{227,	36,	74}};
-    		
     		for (int i = 0; i < width; i++) {
     			for (int j = 0; j < high; j++) {
     				o[i][j] = (pixels[i][j] >> 16) & 0xff;
     			}
     		}
+    		//------
     		
     		System.out.println("Start Cutting");
     		weight w = new weight();
     		
-    		//Set Width, high
     		w.setW(width);
     		w.setH(high);
-    		//------
     		
     		//Set line point
     		 for(int i=0; i<pointR.size()-1; i++){
