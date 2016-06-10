@@ -29,10 +29,10 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 	static graph g1;
 	public static void main(String args[]){
 		
-		System.out.println("Pls input the file name:");
+//		System.out.println("Pls input the file name:");
 //		input = new Scanner(System.in);
 //		g1 = new graph(input.nextLine())
-		g1 = new graph("test");
+		g1 = new graph("test1");
 		image = g1.getP();
 		g1.showImg();
 		pixels = g1.getImageGRB();
@@ -66,68 +66,81 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
         if (cmd == "b1") {
            
     		//Set width, high
-    		int width = g1.getW(), high = g1.getH();
-//        	int width = 3, high = 3;
+//    		int width = g1.getW(), high = g1.getH();
+        	int width = 3, high = 3;
         	//------
         	
         	//Set Original
-    		int[][] o = new int[width][high];
-//	    		= {{240,	227,	74},
-//    				{204,	240,	51},
-//    				{227,	36,	74}};
-    		for (int i = 0; i < width; i++) {
-    			for (int j = 0; j < high; j++) {
-    				o[i][j] = (pixels[i][j] >> 16) & 0xff;
-    			}
-    		}
+    		int[][] o// = new int[width][high];
+	    		= {{240,	227,	74},
+    				{204,	240,	51},
+    				{227,	36,	74}};
+//    		for (int i = 0; i < width; i++) {
+//    			for (int j = 0; j < high; j++) {
+//    				o[i][j] = (pixels[i][j] >> 16) & 0xff;
+//    			}
+//    		}
     		//------
     		
-    		System.out.println("Start Cutting");
+//    		System.out.println("Start Cutting");
     		weight w = new weight();
     		
     		w.setW(width);
     		w.setH(high);
     		
     		//Set line point
-    		 for(int i=0; i<pointR.size()-1; i++){
-             	Point p=(Point)pointR.get(i);
-             	if(!p.equals(A_BREAK))
-             		w.setL(p);
-             }
-             System.out.println("L: ");
-             for(int i=0; i<pointL.size()-1; i++){
-             	Point p=(Point)pointL.get(i);
-             	if(!p.equals(A_BREAK))
-             		w.setR(p);
-             }
-//    		p = new Point(2,0);
-//    		w.setL(p);
-//    		p = new Point(0,2);
-//    		w.setR(p);
+//    		 for(int i=0; i<pointR.size()-1; i++){
+//             	Point p=(Point)pointR.get(i);
+//             	if(!p.equals(A_BREAK))
+//             		w.setL(p);
+//             }
+//             System.out.println("L: ");
+//             for(int i=0; i<pointL.size()-1; i++){
+//             	Point p=(Point)pointL.get(i);
+//             	if(!p.equals(A_BREAK))
+//             		w.setR(p);
+//             }
+    		p = new Point(2,0);
+    		w.setL(p);
+    		p = new Point(0,2);
+    		w.setR(p);
     		//------
     		
     		w.setOriginal(o);
     		
-    		
-    		System.out.println("Start findSigma");
-    		w.findSigma();
-    		System.out.println("Start initWeight");
-    		w.initWeightDouble();
-    		System.out.println("Start findWeights");
-//    		w.findWeights();
-    		
+
     		int nodeNum;
     		int flow;
     		
     		List<List<List<Double>>> graph;
-    		graph = w.findWeightDouble();
-    		
-//    		System.out.println("Start printWeightDouble");
-//    		w.printWeightDouble();
 
-    		maxflow maxflowA = new maxflow(width*high, width, high);
-    		flow = maxflowA.maxflow(graph);
-    		System.out.println("Max flow = " + flow);
+    		w.findSigma();
+//    		System.out.println("Start initWeight");
+    		w.initWeightDouble();
+//    		System.out.println("Start findWeights");
+//    		w.findWeights();
+    		
+    		for (double b = 0; b <=100; b = b + 0.1) {
+    			for (double Lamda = 0; Lamda <=60; Lamda++) {
+		    		w.setB(b);
+		    		w.setLamda(Lamda);
+//		    		System.out.println("Start findSigma");
+		    		
+		    		graph = w.findWeightDouble();
+		    		
+		    		if (w.test == 1) {
+//		    		System.out.println("Start printWeightDouble");
+//		    		w.printWeightDouble();
+		
+		    		maxflow maxflowA = new maxflow(width*high, width, high);
+		    		flow = maxflowA.maxflow(graph);
+		    		System.out.println("Max flow = " + flow);
+//		    		if (Lamda% 1 == 0) {
+//			    		Scanner input = new Scanner(System.in);
+//			    		String str = input.next();
+//		    		}
+		    	}}
+    		}
         }
     }
 
