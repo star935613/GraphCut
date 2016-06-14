@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
-import javax.swing.JComponent;
 
 public class test extends JPanel implements MouseMotionListener, MouseListener, ActionListener
 {
@@ -36,9 +36,21 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 		image = g1.getP();
 		g1.showImg();
 		pixels = g1.getImageGRB();
-		
+		int sWight = g1.getW(), sHight = g1.getH();
+        /*for (int x = 0; x < sWight; x++) {
+            for (int y = 0; y < sHight; y++) {
+            	int rgb=pixels[x][y];
+            	//int r=(rgb&0x00ff0000)>>16;
+            	//int g=(rgb&0x0000ff00)>>8;
+            	//int b=rgb&0x000000ff;
+            	int black=0;
+            	rgb=(0xff000000|(black<<16)|(black<<8)|black);                               
+            	pixels[x][y]=rgb;
+            	System.out.printf(rgb + " ,");
+            	image.setRGB(x,y,rgb);
+            }
+        }*/
 		A.setTitle("Draw");
-
 		JLabel lblimage = new JLabel(new ImageIcon(image));
 		A.add(lblimage, BorderLayout.CENTER);
 
@@ -127,7 +139,15 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 
     		maxflow maxflowA = new maxflow(width*high, width, high);
     		flow = maxflowA.maxflow(graph);
+    		
     		System.out.println("Max flow = " + flow);
+    		
+    		JFrame frame = new JFrame();
+       		frame.setTitle("after");
+    		JLabel lblimage = new JLabel(new ImageIcon(image));
+    		frame.getContentPane().add(lblimage, BorderLayout.CENTER);
+    		frame.setSize(width+50, high+50);
+    		frame.setVisible(true);
         }
     }
 
