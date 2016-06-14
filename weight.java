@@ -7,8 +7,8 @@ import java.util.List;
 class weight {//extends temp{
 
 	private double sigma;	//σ
-	private double lamda = 0.01;	//λ
-	private double B = 100;		//B的倍數
+	private double lamda = 15;	//λ
+	private double B = 0;		//B的倍數
 	private int w, h;
 	int[][] original = new int[w][h];
 	private ArrayList<Point> pointL = new ArrayList<Point>();
