@@ -32,7 +32,7 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 //		System.out.println("Pls input the file name:");
 //		input = new Scanner(System.in);
 //		g1 = new graph(input.nextLine())
-		g1 = new graph("test1");
+		g1 = new graph("dog");
 		image = g1.getP();
 		g1.showImg();
 		pixels = g1.getImageGRB();
@@ -66,29 +66,32 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
         if (cmd == "b1") {
            
     		//Set width, high
-//    		int width = g1.getW(), high = g1.getH();
-        	int width = 12, high = 12;
+    		int width = g1.getW(), high = g1.getH();
+//        	int width = 3, high = 3;
         	//------
         	
         	//Set Original
-    		int[][] o //= new int[width][high];
-	    		= {{240, 240, 227, 227, 224, 224, 240, 240, 227, 227, 224, 224},
-	    			{240, 240, 227, 227, 224, 224, 240, 240, 227, 227, 224, 224},
-    				{204, 204, 51, 51, 240,	240, 204, 204, 51, 51, 240,	240},
-    				{204, 204, 51, 51, 240,	240, 204, 204, 51, 51, 240,	240},
-    				{227, 227, 36, 36, 74, 74, 227, 227, 36, 36, 74, 74},
-    				{227, 227, 226, 226, 224, 224, 227, 227, 226, 226, 224, 224},
-		    		{240, 240, 227, 227, 224, 224, 240, 240, 227, 227, 224, 224},
-					{240, 240, 227, 227, 224, 224, 240, 240, 227, 227, 224, 224},
-					{204, 204, 51, 51, 240,	240, 204, 204, 51, 51, 240,	240},
-					{204, 204, 51, 51, 240,	240, 204, 204, 51, 51, 240,	240},
-					{227, 227, 36, 36, 74, 74, 227, 227, 36, 36, 74, 74},
-					{227, 227, 226, 226, 224, 224, 227, 227, 226, 226, 224, 224}};
-//    		for (int i = 0; i < width; i++) {
-//    			for (int j = 0; j < high; j++) {
-//    				o[i][j] = (pixels[i][j] >> 16) & 0xff;
-//    			}
-//    		}
+    		int[][] o = new int[width][high];
+//	    		= {{240,	227,	74},
+//				{204,	240,	51},
+//				{227,	36,	74}};
+//	    		= {{240, 240, 227, 227, 224, 224, 240, 240, 227, 227, 224, 224},
+//	    			{240, 240, 227, 227, 224, 224, 240, 240, 227, 227, 224, 224},
+//    				{204, 204, 51, 51, 240,	240, 204, 204, 51, 51, 240,	240},
+//    				{204, 204, 51, 51, 240,	240, 204, 204, 51, 51, 240,	240},
+//    				{227, 227, 36, 36, 74, 74, 227, 227, 36, 36, 74, 74},
+//    				{227, 227, 226, 226, 224, 224, 227, 227, 226, 226, 224, 224},
+//		    		{240, 240, 227, 227, 224, 224, 240, 240, 227, 227, 224, 224},
+//					{240, 240, 227, 227, 224, 224, 240, 240, 227, 227, 224, 224},
+//					{204, 204, 51, 51, 240,	240, 204, 204, 51, 51, 240,	240},
+//					{204, 204, 51, 51, 240,	240, 204, 204, 51, 51, 240,	240},
+//					{227, 227, 36, 36, 74, 74, 227, 227, 36, 36, 74, 74},
+//					{227, 227, 226, 226, 224, 224, 227, 227, 226, 226, 224, 224}};
+    		for (int i = 0; i < width; i++) {
+    			for (int j = 0; j < high; j++) {
+    				o[i][j] = (pixels[i][j] >> 16) & 0xff;
+    			}
+    		}
     		//------
     		
 //    		System.out.println("Start Cutting");
@@ -98,11 +101,11 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
     		w.setH(high);
     		
     		//Set line point
-    		p = new Point(0,0);	//
-    		pointL.add(p);	//
+//    		p = new Point(2,0);	//
+//    		pointL.add(p);	//
     		w.setL(pointL);
-    		p = new Point(2,2);	//
-    		pointR.add(p);	//
+//    		p = new Point(0,2);	//
+//    		pointR.add(p);	//
     		w.setR(pointR);
     		//------
     		
@@ -114,37 +117,29 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
     		
     		List<List<List<Double>>> graph;
 
+    		System.out.println("Start findSigma");
     		w.findSigma();
     		System.out.println("Start initWeight");
     		w.initWeightDouble();
-    		System.out.println("Start findWeights");
-//    		w.findWeights();
     		
-    		
-    		int b = 1;
-    		int Lamda = 1;
-//    		for (; b <=100; b ++) {
-//    			for (; Lamda <=60; Lamda++) {
+    		int b = 100;
+    		double Lamda = 60;
+//    		for (; Lamda > 0.00000000000000000000000001; Lamda = Lamda / 10) {
+//    			for (; b <=1000; b ++) {
 		    		w.setB(b);
 		    		w.setLamda(Lamda);
-		    		System.out.println("Start findSigma");
 		    		
+//		    		System.out.println("Start findWeights");
 		    		graph = w.findWeightDouble();
 		    		
 		    		if (w.test == 1) {
-			    		System.out.println("Start printWeightDouble");
-	//		    		w.printWeightDouble();
 			
 			    		maxflow maxflowA = new maxflow(width*high, width, high);
 			    		flow = maxflowA.maxflow(graph);
 			    		System.out.println("Max flow = " + flow);
-	//		    		if (Lamda% 1 == 0) {
-	//			    		Scanner input = new Scanner(System.in);
-	//			    		String str = input.next();
-	//		    		}
-		    		}
+//		    		}
 //		    	}
-//    		}
+    		}
         }
     }
 
@@ -201,7 +196,7 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
  		Graphics2D g2 = (Graphics2D)g;
  		super.paint(g2);
  		g2.drawImage(image, null, null);
- 		g2.setStroke( new BasicStroke( 15,  BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER) );
+ 		g2.setStroke( new BasicStroke( 5,  BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER) );
  		for(int i=0; i<pointL.size()-1; i++){
  			g2.setColor(new Color(255, 0, 0, 255));
  			Point p=(Point)pointL.get(i);

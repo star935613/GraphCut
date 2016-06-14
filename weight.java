@@ -14,7 +14,7 @@ class weight {//extends temp{
 	int[][] original = new int[w][h];
 	private ArrayList<Point> pointL;
 	private ArrayList<Point> pointR;
-//	private	final Point A_BREAK = new Point(-1,-1);
+	private	final Point A_BREAK = new Point(-1,-1);
 
 	private List<List<List<Double>>> weightsDouble = new ArrayList<List<List<Double>>>();		//原本表格的型態，怕小數點誤差過大所以先保留
 //	private List<List<List<Integer>>> weightsInteger = new ArrayList<List<List<Integer>>>();		//原本表格的型態
@@ -96,15 +96,18 @@ class weight {//extends temp{
 	}
 		
 	int check(int x, int y) {
-		for (int i = 0; i < pointL.size() - 1; i++) {
+		for (int i = 0; i < pointL.size(); i++) {
 //			System.out.println(pointL.get(i).getX() + " " + pointL.get(i).getY());
-//			System.out.println(pointR.get(i).getX() + " " + pointR.get(i).getY());
 			if (pointL.get(i).getX() != -1 && pointL.get(i).getY() != -1) {
 				if (pointL.get(i).getX() == x && pointL.get(i).getY() == y) {
 					return 1;
 				}
 			}
-			else if (pointR.get(i).getX() != -1 && pointR.get(i).getY() != -1) {
+		}
+		
+		for (int i = 0; i < pointR.size(); i++) {
+//			System.out.println(pointR.get(i).getX() + " " + pointR.get(i).getY());
+			if (pointR.get(i).getX() != -1 && pointR.get(i).getY() != -1) {
 				if (pointR.get(i).getX() == x && pointR.get(i).getY() == y) {
 					return 2;
 				}
@@ -116,7 +119,7 @@ class weight {//extends temp{
 	List<List<List<Double>>> findWeightDouble() {
 		double checkL = 0, checkR = 0;
 		double sumUp = 0, sumDown = 0, sumL = 0, sumR = 0;
-		int check;
+		int check, den;
 
 		
 
@@ -152,16 +155,23 @@ class weight {//extends temp{
 
 					weightsDouble.get(i).get(j).set(0, 1 + Math.max( Math.max(sumUp, sumL), Math.max(sumDown, sumR) ));
 					weightsDouble.get(i).get(j).set(5 ,(double) 0);
+					checkL = checkL + weightsDouble.get(i).get(j).get(0);
 					for (int x = 0; x < w; x++) {
 						for (int y = 0; y < h; y++) {
-							weightsDouble.get(x).get(y).set(0, weightsDouble.get(x).get(y).get(0) + Math.abs(choosePixels(x, y)- choosePixels(i, j)) / 255 * Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))/(Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))+Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))) * lamda);
-							weightsDouble.get(x).get(y).set(5, weightsDouble.get(x).get(y).get(5) + Math.abs(choosePixels(x, y)- choosePixels(i, j)) / 255 * Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))/(Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))+Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))) * lamda);
-//							System.out.println("find Weights Finish" + ", B=" + B + ", Lamda=" + lamda + ", " + checkL + ", " + checkR);
-							checkL = checkL + weightsDouble.get(x).get(y).get(0);
-							checkR = checkR + weightsDouble.get(x).get(y).get(5);
+							
+//							System.out.println("L	(" + i + ", " + j + ") (" + x + ", " + y + ")" + "find Weights Finish" + ", B=" + B + ", Lamda=" + lamda + ", " + checkL + ", " + checkR);
+							if (Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2))) > 0 && Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2))) > 0) {
+								weightsDouble.get(x).get(y).set(0, weightsDouble.get(x).get(y).get(0) + Math.abs(choosePixels(x, y)- choosePixels(i, j)) * Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))/(Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))+Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))) * lamda);
+								weightsDouble.get(x).get(y).set(5, weightsDouble.get(x).get(y).get(5) + Math.abs(choosePixels(x, y)- choosePixels(i, j)) * Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))/(Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))+Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))) * lamda);
+								
+//								checkR = checkR + Math.abs(choosePixels(x, y)- choosePixels(i, j)) / 255 * Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))/(Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))+Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))) * lamda;
+							}
+//							else {
+//								System.out.println("dist" + Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2))) + " " + Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2))));
+//							}
 						}
 					}
-					System.out.println("L	" + i + " " + j);
+//					System.out.println("L	" + i + " " + j);
 				}
 				else if (check == 2) {	//R
 //					System.out.println("R (" + i + ", " + j + ")");
@@ -179,23 +189,29 @@ class weight {//extends temp{
 					}
 					weightsDouble.get(i).get(j).set(0, (double) 0);
 					weightsDouble.get(i).get(j).set(5, 1 + Math.max( Math.max(sumUp, sumL), Math.max(sumDown, sumR) ));
+					checkR = checkR + weightsDouble.get(i).get(j).get(5);
 					for (int x = 0; x < w; x++) {
 						for (int y = 0; y < h; y++) {
-							weightsDouble.get(x).get(y).set(0, weightsDouble.get(x).get(y).get(0) + Math.abs(choosePixels(x, y)- choosePixels(i, j)) / 255 * Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))/(Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))+Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))) * lamda);
-							weightsDouble.get(x).get(y).set(5, weightsDouble.get(x).get(y).get(5) + Math.abs(choosePixels(x, y)- choosePixels(i, j)) / 255 * Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))/(Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))+Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))) * lamda);
-//							System.out.println("find Weights Finish" + ", B=" + B + ", Lamda=" + lamda + ", " + checkL + ", " + checkR);
-							checkL = checkL + weightsDouble.get(x).get(y).get(0);
-							checkR = checkR + weightsDouble.get(x).get(y).get(5);
+							
+//							System.out.println("R	find Weights Finish" + ", B=" + B + ", Lamda=" + lamda + ", " + checkL + ", " + checkR);
+							if (Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2))) > 0 && Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2))) > 0) {
+								weightsDouble.get(x).get(y).set(0, weightsDouble.get(x).get(y).get(0) + Math.abs(choosePixels(x, y)- choosePixels(i, j)) * Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))/(Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))+Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))) * lamda);
+								weightsDouble.get(x).get(y).set(5, weightsDouble.get(x).get(y).get(5) + Math.abs(choosePixels(x, y)- choosePixels(i, j)) * Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))/(Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))+Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))) * lamda);
+//								checkL = checkL + Math.abs(choosePixels(x, y)- choosePixels(i, j)) / 255 * Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))/(Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))+Math.sqrt((Math.pow(x-i,2)+Math.pow(y-j,2)))) * lamda;
+								
+							}
+//							else {
+//								System.out.print("0");
+//							}
 						}
 					}
-					System.out.println("R	" + i + " " + j);
+//					System.out.println("R	" + i + " " + j);
 				}
-				System.out.println("(" + i + " " + j + ")");
+//				System.out.println("check = " + check);
 //				else {	//!=R && !=L
 //					System.out.println("(" + i + ", " + j + ")");
 //					weightsDouble.get(i).get(j).set(0, Math.abs(choosePixels(i, j)- choosePixels(pL.x, pL.y)) * Math.sqrt((Math.pow(i-pL.x,2)+Math.pow(j-pL.y,2)))/(Math.sqrt((Math.pow(i-pL.x,2)+Math.pow(j-pL.y,2)))+Math.sqrt((Math.pow(i-pR.x,2)+Math.pow(j-pR.y,2)))) * lamda);
 //					weightsDouble.get(i).get(j).set(5, Math.abs(choosePixels(i, j)- choosePixels(pR.x, pR.y)) * Math.sqrt((Math.pow(i-pR.x,2)+Math.pow(j-pR.y,2)))/(Math.sqrt((Math.pow(i-pL.x,2)+Math.pow(j-pL.y,2)))+Math.sqrt((Math.pow(i-pR.x,2)+Math.pow(j-pR.y,2)))) * lamda);
-
 //				}
 				
 				
@@ -203,7 +219,7 @@ class weight {//extends temp{
 //				System.out.println();
 			}
 		}
-//		System.out.println("find Weights Finish" + ", B=" + B + ", Lamda=" + lamda + ", " + checkL + ", " + checkR);
+		System.out.println("find Weights Finish" + ", B=" + B + ", Lamda=" + lamda + ", " + checkL + ", " + checkR);
 		if (checkL  > checkR ) {
 //			lamda = lamda * 0.1;
 //			B = B * 10;
@@ -226,8 +242,7 @@ class weight {//extends temp{
 		
 		for (int i = 0; i < w; i++) {
 			for (int j = 0; j < h; j++) {
-				System.out.print("	(" + i + " "+ j + ") " + i*3+j +"S" + " " + df.format(weightsDouble.get(i).get(j).get(0)));
-				System.out.print("	");
+				System.out.print("	(" + i + " "+ j + ") " + i*3+j +"	S" + " " + df.format(weightsDouble.get(i).get(j).get(0)));
 				System.out.print("	上" + " " + df.format(weightsDouble.get(i).get(j).get(1)));
 				System.out.print("	下" + " " + df.format(weightsDouble.get(i).get(j).get(2)));
 				System.out.print("	左" + " " + df.format(weightsDouble.get(i).get(j).get(3)));
