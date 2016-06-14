@@ -67,14 +67,23 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
            
     		//Set width, high
 //    		int width = g1.getW(), high = g1.getH();
-        	int width = 3, high = 3;
+        	int width = 6, high = 6;
         	//------
         	
         	//Set Original
-    		int[][] o// = new int[width][high];
-	    		= {{240,	227,	74},
-    				{204,	240,	51},
-    				{227,	36,	74}};
+    		int[][] o //= new int[width][high];
+	    		= {{240, 240, 227, 227, 224, 224, 240, 240, 227, 227, 224, 224},
+	    			{240, 240, 227, 227, 224, 224, 240, 240, 227, 227, 224, 224},
+    				{204, 204, 51, 51, 240,	240, 204, 204, 51, 51, 240,	240},
+    				{204, 204, 51, 51, 240,	240, 204, 204, 51, 51, 240,	240},
+    				{227, 227, 36, 36, 74, 74, 227, 227, 36, 36, 74, 74},
+    				{227, 227, 226, 226, 224, 224, 227, 227, 226, 226, 224, 224},
+		    		{240, 240, 227, 227, 224, 224, 240, 240, 227, 227, 224, 224},
+					{240, 240, 227, 227, 224, 224, 240, 240, 227, 227, 224, 224},
+					{204, 204, 51, 51, 240,	240, 204, 204, 51, 51, 240,	240},
+					{204, 204, 51, 51, 240,	240, 204, 204, 51, 51, 240,	240},
+					{227, 227, 36, 36, 74, 74, 227, 227, 36, 36, 74, 74},
+					{227, 227, 226, 226, 224, 224, 227, 227, 226, 226, 224, 224}};
 //    		for (int i = 0; i < width; i++) {
 //    			for (int j = 0; j < high; j++) {
 //    				o[i][j] = (pixels[i][j] >> 16) & 0xff;
@@ -89,21 +98,12 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
     		w.setH(high);
     		
     		//Set line point
-//    		 for(int i=0; i<pointR.size()-1; i++){
-//             	Point p=(Point)pointR.get(i);
-//             	if(!p.equals(A_BREAK))
-//             		w.setL(p);
-//             }
-//             System.out.println("L: ");
-//             for(int i=0; i<pointL.size()-1; i++){
-//             	Point p=(Point)pointL.get(i);
-//             	if(!p.equals(A_BREAK))
-//             		w.setR(p);
-//             }
-    		p = new Point(2,0);
-    		w.setL(p);
-    		p = new Point(0,2);
-    		w.setR(p);
+    		p = new Point(0,0);	//
+    		pointL.add(p);	//
+    		w.setL(pointL);
+    		p = new Point(2,2);	//
+    		pointR.add(p);	//
+    		w.setR(pointR);
     		//------
     		
     		w.setOriginal(o);
@@ -115,13 +115,16 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
     		List<List<List<Double>>> graph;
 
     		w.findSigma();
-//    		System.out.println("Start initWeight");
+    		System.out.println("Start initWeight");
     		w.initWeightDouble();
-//    		System.out.println("Start findWeights");
+    		System.out.println("Start findWeights");
 //    		w.findWeights();
     		
-    		for (double b = 0; b <=100; b = b + 0.1) {
-    			for (double Lamda = 0; Lamda <=60; Lamda++) {
+    		
+    		int b = 100;
+    		int Lamda = 0;
+//    		for (double b = 0; b <=100; b = b + 0.1) {
+//    			for (double Lamda = 0; Lamda <=60; Lamda++) {
 		    		w.setB(b);
 		    		w.setLamda(Lamda);
 //		    		System.out.println("Start findSigma");
@@ -141,8 +144,8 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 //		    		}
 		    	}}
     		}
-        }
-    }
+//        }
+//    }
 
 	public int choosePixels(int x, int y)
    	{

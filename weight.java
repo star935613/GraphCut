@@ -12,8 +12,8 @@ class weight {//extends temp{
 	private double B = 100;		//B的倍數
 	private int w, h;
 	int[][] original = new int[w][h];
-	private ArrayList<Point> pointL = new ArrayList<Point>();
-	private ArrayList<Point> pointR = new ArrayList<Point>();
+	private ArrayList<Point> pointL;
+	private ArrayList<Point> pointR;
 
 	private List<List<List<Double>>> weightsDouble = new ArrayList<List<List<Double>>>();		//原本表格的型態，怕小數點誤差過大所以先保留
 //	private List<List<List<Integer>>> weightsInteger = new ArrayList<List<List<Integer>>>();		//原本表格的型態
@@ -27,13 +27,13 @@ class weight {//extends temp{
 		System.out.println(h);
 	}
 
-	void setL(Point p) {
-		pointL.add(p);
-		System.out.println("L " + p.x + ", " + p.y);
+	void setL(ArrayList<Point> point) {
+		pointL = point;
+//		System.out.println("L " + pointL.get(x) + ", " + pointL.y);
 	}
 
-	void setR(Point p) {
-		pointR.add(p);
+	void setR(ArrayList<Point> point) {
+		pointR = point;
 	}
 	
 	void setLamda(double Lamda) {
@@ -71,28 +71,6 @@ class weight {//extends temp{
 //		System.out.println("Init weight Finish");
 	}
 	
-//	void initWeightInteger() {
-//		System.out.println("Init weight Start" + w + ", " + h);
-//		
-//		for (int i = 0; i < w; i++) {
-//			List<List<Integer>> t = new ArrayList<List<Integer>>();
-//			weightsInteger.add(t);
-//		}
-//		
-//		for (int i = 0; i < w; i++) {
-//			for (int j = 0; j < h; j++) {
-//				List<Integer> tem = new ArrayList<Integer>();
-//				List<Integer> temp = new ArrayList<Integer>();
-//				weightsInteger.get(i).add(tem);
-//				for (int k = 0; k < 6; k++) {
-//					temp.add(0);
-//				}
-//				weightsInteger.get(i).get(j).addAll(temp);
-//			}
-//		}
-//		System.out.println("Init weightInteger Finish");
-//	}
-
 	void findSigma() {
 		double sum = 0;
 		double squareSum = 0;
@@ -115,39 +93,90 @@ class weight {//extends temp{
 		sigma = squareSum - Math.pow(sum, 2);
 		System.out.println("Sigma: " + sigma + "    sum: " + sum + "    squareSum: " + squareSum);
 	}
-
-	List<List<List<Double>>> findWeightDouble() {
-		double avgL = 0, avgR = 0;
-		double checkL = 0, checkR = 0;
-		double sumUp = 0, sumDown = 0, sumL = 0, sumR = 0;
-
-		//actionPerformed重複，暫時假設只有各點一點
+	
+//	double nearPointL(int x, int y) {
+//		final Point A_BREAK = new Point(-1,-1);	//test repeat
+//		int tempX, tempY, tempDistance;
+//		int check = 0;
+//		double ans = 0;
+//		double avgL = 0;
+//		
+//		//actionPerformed repeat
+////		 int alpha, red, green, blue;
+//
+//        for(int i=0; i<pointL.size()-1; i++){
+//       	 	Point pL=(Point)pointL.get(0);
+//       	 	if (pL.x == x && pL.y == y) {
+//       	 		check = -1;
+//       	 		break;
+//       	 	}
+//         	if(!pL.equals(A_BREAK)) {
+////	   			 alpha = (choosePixels(pL.x, pL.y) >> 24) & 0xff;
+////	   			 red = (choosePixels(pL.x, pL.y) >> 16) & 0xff;
+////	   			 green = (choosePixels(pL.x, pL.y) >> 8) & 0xff;
+////	   			 blue = (choosePixels(pL.x, pL.y)) & 0xff;
+//
+//	   			 avgL = avgL + choosePixels(pL.x, pL.y);
+//	   		}
+//        }
+//		 avgL = avgL / 1;//pointL.size();
+//		 
+//		 if (check == 0) {
+//			 return ans;
+//		 }
+//		 else {
+//			 return -1;
+//		 }
+//	}
+//	
+//	double nearPointR(int x, int y) {
+//		final Point A_BREAK = new Point(-1,-1);	//test repeat
+//		int tempX, tempY, tempDistance;
+//		int check = 0;
+//		double ans = 0;
+//		double avgR = 0;
+//		
+//		//actionPerformed repeat
 //		 int alpha, red, green, blue;
 //		 for(int i=0; i<pointR.size()-1; i++){
-			 Point pR=(Point)pointR.get(0);
-//         	if(!pR.equals(A_BREAK)) {
-//	   			 alpha = (choosePixels(pR.x, pR.y) >> 24) & 0xff;
+//			 Point pR=(Point)pointR.get(0);
+//        	if(!pR.equals(A_BREAK)) {
+////	   			 alpha = (choosePixels(pR.x, pR.y) >> 24) & 0xff;
 //	   			 red = (choosePixels(pR.x, pR.y) >> 16) & 0xff;
-//	   			 green = (choosePixels(pR.x, pR.y) >> 8) & 0xff;
-//	   			 blue = (choosePixels(pR.x, pR.y)) & 0xff;
+////	   			 green = (choosePixels(pR.x, pR.y) >> 8) & 0xff;
+////	   			 blue = (choosePixels(pR.x, pR.y)) & 0xff;
+//
+//	   			 avgR = avgR+ choosePixels(pR.x, pR.y);
+//  			 }
+//        }
+//		 avgR = avgR / 1;//pointR.size();
+//		 
+//		 if (check == 0) {
+//			 return ans;
+//		 }
+//		 else {
+//			 return -1;
+//		 }
+//	}
+	
+	int check(int x, int y) {
+		for (int i = 0; i < pointL.size(); i++) {
+			if (pointL.get(i).getX() == x && pointL.get(i).getY() == y) {
+				return 1;
+			}
+			else if (pointR.get(i).getX() == x && pointR.get(i).getY() == y) {
+				return 2;
+			}
+		}
+		return 0;
+	}
 
-	   			 avgR = avgR+ choosePixels(pR.x, pR.y);
-//   			 }
-//         }
-		 avgR = avgR / 1;//pointR.size();
+	List<List<List<Double>>> findWeightDouble() {
+		double checkL = 0, checkR = 0;
+		double sumUp = 0, sumDown = 0, sumL = 0, sumR = 0;
+//		int 
 
-//         for(int i=0; i<pointL.size()-1; i++){
-        	 Point pL=(Point)pointL.get(0);
-//          	if(!pL.equals(A_BREAK)) {
-// 	   			 alpha = (choosePixels(pL.x, pL.y) >> 24) & 0xff;
-// 	   			 red = (choosePixels(pL.x, pL.y) >> 16) & 0xff;
-// 	   			 green = (choosePixels(pL.x, pL.y) >> 8) & 0xff;
-// 	   			 blue = (choosePixels(pL.x, pL.y)) & 0xff;
-
- 	   			 avgL = avgL + choosePixels(pL.x, pL.y);
-// 	   		}
-//         }
- 		 avgL = avgL / 1;//pointL.size();
+		
 
 		for (int i = 0; i < w; i++) {
 			for (int j = 0; j < h; j++) {
