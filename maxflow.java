@@ -17,6 +17,11 @@ public class maxflow
 	private int preSink;
 	private int wide;
 	private int height;
+	private graph g1;
+	
+	void setGraph(graph g) {
+		g1 = g;
+	}
 
 	//init
 	public maxflow (int nodeNum, int wide, int height)
@@ -280,6 +285,7 @@ public class maxflow
 			else{
 				sinkVertex.add(vertex);
 				System.out.printf("T");
+				g1.setPixRGB(ii, jj, black);
 			}
 			if ((vertex+1) % wide == 0 ){
 				System.out.println("");

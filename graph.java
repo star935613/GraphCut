@@ -93,12 +93,18 @@ class graph
   		for(int i = 0; i < width ; i++){
   			for(int j = 0; j < height; j++){
   				pixels[i][j] = image.getRGB(i,j);
+//  				image.setRGB(startX, startY, w, h, rgbArray, offset, scansize);
+//  				
   //			printPixelARGB(i, j, pixels[i][j]); 
 
   			} 				
   		}
   		return pixels;
    	}
+  	
+  	void setPixRGB(int x, int y, int rgb) {
+  		image.setRGB(x, y, rgb);
+  	}
    /*
    void printPixelARGB(int x, int y, int pixel) 
    {

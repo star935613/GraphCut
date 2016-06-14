@@ -136,8 +136,10 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
     		
 //    		System.out.println("Start printWeightDouble");
 //    		w.printWeightDouble();
+    		
 
     		maxflow maxflowA = new maxflow(width*high, width, high);
+    		maxflowA.setGraph(g1);
     		flow = maxflowA.maxflow(graph);
     		
     		System.out.println("Max flow = " + flow);
