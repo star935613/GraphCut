@@ -76,7 +76,7 @@ class graph
 
 
 
-
+/*
    	void showImg()
    	{
    		JFrame frame = new JFrame();
@@ -86,7 +86,7 @@ class graph
 		frame.setSize(width+50, height+50);
 		frame.setVisible(true);
    	}
-  
+*/
   	int[][] getImageGRB()
   	{
   		int[][] pixels = new int[width][height];
