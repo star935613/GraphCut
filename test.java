@@ -67,7 +67,7 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
            
     		//Set width, high
 //    		int width = g1.getW(), high = g1.getH();
-        	int width = 6, high = 6;
+        	int width = 12, high = 12;
         	//------
         	
         	//Set Original
@@ -121,31 +121,32 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 //    		w.findWeights();
     		
     		
-    		int b = 100;
-    		int Lamda = 0;
-//    		for (double b = 0; b <=100; b = b + 0.1) {
-//    			for (double Lamda = 0; Lamda <=60; Lamda++) {
+    		int b = 1;
+    		int Lamda = 1;
+//    		for (; b <=100; b ++) {
+//    			for (; Lamda <=60; Lamda++) {
 		    		w.setB(b);
 		    		w.setLamda(Lamda);
-//		    		System.out.println("Start findSigma");
+		    		System.out.println("Start findSigma");
 		    		
 		    		graph = w.findWeightDouble();
 		    		
 		    		if (w.test == 1) {
-//		    		System.out.println("Start printWeightDouble");
-//		    		w.printWeightDouble();
-		
-		    		maxflow maxflowA = new maxflow(width*high, width, high);
-		    		flow = maxflowA.maxflow(graph);
-		    		System.out.println("Max flow = " + flow);
-//		    		if (Lamda% 1 == 0) {
-//			    		Scanner input = new Scanner(System.in);
-//			    		String str = input.next();
-//		    		}
-		    	}}
-    		}
-//        }
-//    }
+			    		System.out.println("Start printWeightDouble");
+	//		    		w.printWeightDouble();
+			
+			    		maxflow maxflowA = new maxflow(width*high, width, high);
+			    		flow = maxflowA.maxflow(graph);
+			    		System.out.println("Max flow = " + flow);
+	//		    		if (Lamda% 1 == 0) {
+	//			    		Scanner input = new Scanner(System.in);
+	//			    		String str = input.next();
+	//		    		}
+		    		}
+//		    	}
+//    		}
+        }
+    }
 
 	public int choosePixels(int x, int y)
    	{
