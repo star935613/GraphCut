@@ -1,9 +1,4 @@
-import java.awt.BorderLayout;
-import java.awt.image.BufferedImage;
 import java.util.*;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 public class maxflow
 {
@@ -12,16 +7,11 @@ public class maxflow
 	private int[] head;
 	private Queue<Integer> queue;
 	private ArrayList<Integer> sourceVertex;
-	private ArrayList<Integer> sinkVertex;
+	private static ArrayList<Integer> sinkVertex;
 	private int afterSource;
 	private int preSink;
 	private int wide;
 	private int height;
-	private graph g1;
-	
-	void setGraph(graph g) {
-		g1 = g;
-	}
 
 	//init
 	public maxflow (int nodeNum, int wide, int height)
@@ -78,7 +68,7 @@ public class maxflow
 		int up = wide;
 		//int rightUp = wide - 1;
 		int left = 1;
-		int right = -0111;
+		int right = -1;
 		//int leftDown = -1*wide + 1;
 		int down = -1*wide;
 		//int rightDown = -1*wide - 1;
@@ -238,9 +228,9 @@ public class maxflow
  	{	
  		List<List<List<Double>>> residual;
  		double path;
- 		int maxF = 0 ,ii,jj;
+ 		int maxF = 0;
  		int vertex;
- 		
+
 // 		for(int a = 0; a < nodeNum; a++)
 //		{
 //			for(int b = 0; b < 6; b++)
@@ -270,33 +260,23 @@ public class maxflow
 			residual.get((int)afterSource/wide).get((int)afterSource%wide).set(0, residual.get((int)afterSource/wide).get((int)afterSource%wide).get(0) - path);	
 			maxF += path;	
 		}
-		int black=0xff000000;
-		black=0;
-		black=(0xff000000|(black<<16)|(black<<8)|black); 
+		
 		//turn to cut	
-		for(vertex = 0, ii=0, jj=0; vertex < nodeNum; vertex++)
-		{	
-			
+		for(vertex = 0; vertex < nodeNum; vertex++)
+		{		
+		
 			if(BFS(residual, vertex)){
 				sourceVertex.add(vertex);
 				System.out.printf("S");
-				
 			}
 			else{
 				sinkVertex.add(vertex);
 				System.out.printf("T");
-				g1.setPixRGB(ii, jj, black);
 			}
 			if ((vertex+1) % wide == 0 ){
 				System.out.println("");
 			}
-        	//image.setRGB(ii,jj,black);
-			ii++;
-			if(ii==wide)
-			{
-				jj++;
-				ii=0;
-			}
+		
 		}
 	/*	
 		for (int a = 0; a < sourceVertex.size(); a++) 
@@ -315,5 +295,10 @@ public class maxflow
   */
 		return maxF;
  	}
+	public static ArrayList<Integer> resourceVertex()
+	{
+		return sinkVertex;
+	}
+	
 
 }

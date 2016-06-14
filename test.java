@@ -2,7 +2,6 @@ import java.util.Scanner;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.BasicStroke;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -19,6 +18,7 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 	private int step = 1,click = 1;
 	public ArrayList<Point> pointL = new ArrayList();
 	public ArrayList<Point> pointR = new ArrayList();
+	private ArrayList<Integer> gsinkVertex;
 	static BufferedImage image = null;
 	static int[][] pixels = null;
  	private	final Point A_BREAK = new Point(-1,-1);
@@ -36,21 +36,9 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 		image = g1.getP();
 		g1.showImg();
 		pixels = g1.getImageGRB();
-		int sWight = g1.getW(), sHight = g1.getH();
-        /*for (int x = 0; x < sWight; x++) {
-            for (int y = 0; y < sHight; y++) {
-            	int rgb=pixels[x][y];
-            	//int r=(rgb&0x00ff0000)>>16;
-            	//int g=(rgb&0x0000ff00)>>8;
-            	//int b=rgb&0x000000ff;
-            	int black=0;
-            	rgb=(0xff000000|(black<<16)|(black<<8)|black);                               
-            	pixels[x][y]=rgb;
-            	System.out.printf(rgb + " ,");
-            	image.setRGB(x,y,rgb);
-            }
-        }*/
+		
 		A.setTitle("Draw");
+
 		JLabel lblimage = new JLabel(new ImageIcon(image));
 		A.add(lblimage, BorderLayout.CENTER);
 
@@ -136,14 +124,27 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
     		
 //    		System.out.println("Start printWeightDouble");
 //    		w.printWeightDouble();
-    		
 
     		maxflow maxflowA = new maxflow(width*high, width, high);
-    		maxflowA.setGraph(g1);
+
     		flow = maxflowA.maxflow(graph);
-    		
     		System.out.println("Max flow = " + flow);
-    		
+    		gsinkVertex=maxflowA.resourceVertex();
+    		int sWight = g1.getW(), sHight = g1.getH();
+            for (int x, y, ii=0; ii < gsinkVertex.size() ; ii++) {
+            		x=gsinkVertex.get(ii)%sWight;
+            		y=gsinkVertex.get(ii)/sWight;
+                	//int rgb=pixels[x][y];
+                	//int r=(rgb&0x00ff0000)>>16;
+                	//int g=(rgb&0x0000ff00)>>8;
+                	//int b=rgb&0x000000ff;
+                	int black=0;
+                	black=(0xff000000|(black<<16)|(black<<8)|black);                               
+                	/*pixels[x][y]=rgb;
+                	System.out.printf(rgb + " ,");*/
+                	image.setRGB(x,y,black);
+                	System.out.printf(gsinkVertex.size() + " ,");
+            }
     		JFrame frame = new JFrame();
        		frame.setTitle("after");
     		JLabel lblimage = new JLabel(new ImageIcon(image));
