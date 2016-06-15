@@ -30,9 +30,10 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 	public static void main(String args[]){
 		
 		System.out.println("Pls input the file name:");
-//		input = new Scanner(System.in);
-//		g1 = new graph(input.nextLine())
-		g1 = new graph("test1");
+
+		input = new Scanner(System.in);
+		g1 = new graph(input.nextLine());
+//		g1 = new graph("test1");
 		image = g1.getP();
 		g1.showImg();
 		pixels = g1.getImageGRB();
@@ -73,8 +74,20 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
         	//Set Original
     		int[][] o = new int[width][high];
 //	    		= {{240,	227,	74},
-//    				{204,	240,	51},
-//    				{227,	36,	74}};
+//				{204,	240,	51},
+//				{227,	36,	74}};
+//	    		= {{240, 240, 227, 227, 224, 224, 240, 240, 227, 227, 224, 224},
+//	    			{240, 240, 227, 227, 224, 224, 240, 240, 227, 227, 224, 224},
+//    				{204, 204, 51, 51, 240,	240, 204, 204, 51, 51, 240,	240},
+//    				{204, 204, 51, 51, 240,	240, 204, 204, 51, 51, 240,	240},
+//    				{227, 227, 36, 36, 74, 74, 227, 227, 36, 36, 74, 74},
+//    				{227, 227, 226, 226, 224, 224, 227, 227, 226, 226, 224, 224},
+//		    		{240, 240, 227, 227, 224, 224, 240, 240, 227, 227, 224, 224},
+//					{240, 240, 227, 227, 224, 224, 240, 240, 227, 227, 224, 224},
+//					{204, 204, 51, 51, 240,	240, 204, 204, 51, 51, 240,	240},
+//					{204, 204, 51, 51, 240,	240, 204, 204, 51, 51, 240,	240},
+//					{227, 227, 36, 36, 74, 74, 227, 227, 36, 36, 74, 74},
+//					{227, 227, 226, 226, 224, 224, 227, 227, 226, 226, 224, 224}};
     		for (int i = 0; i < width; i++) {
     			for (int j = 0; j < high; j++) {
     				o[i][j] = (pixels[i][j] >> 16) & 0xff;
@@ -82,53 +95,43 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
     		}
     		//------
     		
-    		System.out.println("Start Cutting");
+//    		System.out.println("Start Cutting");
     		weight w = new weight();
     		
     		w.setW(width);
     		w.setH(high);
     		
     		//Set line point
-    		 for(int i=0; i<pointR.size()-1; i++){
-             	Point p=(Point)pointR.get(i);
-             	if(!p.equals(A_BREAK))
-             		w.setL(p);
-             }
-             System.out.println("L: ");
-             for(int i=0; i<pointL.size()-1; i++){
-             	Point p=(Point)pointL.get(i);
-             	if(!p.equals(A_BREAK))
-             		w.setR(p);
-             }
-//    		p = new Point(2,0);
-//    		w.setL(p);
-//    		p = new Point(0,2);
-//    		w.setR(p);
+//    		p = new Point(2,0);	//
+//    		pointL.add(p);	//
+    		w.setL(pointL);
+//    		p = new Point(0,2);	//
+//    		pointR.add(p);	//
+    		w.setR(pointR);
     		//------
     		
     		w.setOriginal(o);
     		
-    		
-    		System.out.println("Start findSigma");
-    		w.findSigma();
-    		System.out.println("Start initWeight");
-    		w.initWeightDouble();
-    		System.out.println("Start findWeights");
-//    		w.findWeights();
-    		
+
     		int nodeNum;
     		int flow;
     		
     		List<List<List<Double>>> graph;
-    		graph = w.findWeightDouble();
+
+    		System.out.println("Start findSigma");
+    		w.findSigma();
+    		System.out.println("Start initWeight");
+    		w.initWeightDouble();
     		
-//    		System.out.println("Start printWeightDouble");
-//    		w.printWeightDouble();
-
+    		double b = 1;
+    		double Lamda = 1;
+    		w.setB(b);
+    		w.setLamda(Lamda);
+    		graph = w.findWeightDouble();
     		maxflow maxflowA = new maxflow(width*high, width, high);
-
     		flow = maxflowA.maxflow(graph);
     		System.out.println("Max flow = " + flow);
+    		
     		gsinkVertex=maxflowA.resourceVertex();
     		int sWight = g1.getW(), sHight = g1.getH();
             for (int x, y, ii=0; ii < gsinkVertex.size() ; ii++) {
@@ -143,7 +146,7 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
                 	/*pixels[x][y]=rgb;
                 	System.out.printf(rgb + " ,");*/
                 	image.setRGB(x,y,black);
-                	System.out.printf(gsinkVertex.size() + " ,");
+//                	System.out.printf(gsinkVertex.size() + " ,");
             }
     		JFrame frame = new JFrame();
        		frame.setTitle("after");
@@ -207,7 +210,7 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
  		Graphics2D g2 = (Graphics2D)g;
  		super.paint(g2);
  		g2.drawImage(image, null, null);
- 		g2.setStroke( new BasicStroke( 15,  BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER) );
+ 		g2.setStroke( new BasicStroke( 5,  BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER) );
  		for(int i=0; i<pointL.size()-1; i++){
  			g2.setColor(new Color(255, 0, 0, 255));
  			Point p=(Point)pointL.get(i);

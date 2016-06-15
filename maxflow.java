@@ -267,14 +267,14 @@ public class maxflow
 		
 			if(BFS(residual, vertex)){
 				sourceVertex.add(vertex);
-				System.out.printf("S");
+//				System.out.printf("S");
 			}
 			else{
 				sinkVertex.add(vertex);
-				System.out.printf("T");
+//				System.out.printf("T");
 			}
 			if ((vertex+1) % wide == 0 ){
-				System.out.println("");
+//				System.out.println("");
 			}
 		
 		}
