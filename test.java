@@ -35,7 +35,7 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 		g1 = new graph(input.nextLine());
 //		g1 = new graph("test1");
 		image = g1.getP();
-		g1.showImg();
+		//g1.showImg();
 		pixels = g1.getImageGRB();
 		
 		A.setTitle("Draw");
