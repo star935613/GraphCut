@@ -10,7 +10,7 @@ class graph
 {
 	ByteArrayOutputStream picture = new ByteArrayOutputStream();
 	BufferedImage image = null;
-	private int height, width;
+	private int height, width, type;
 	
 	public graph(String name)
 	{		
@@ -28,6 +28,7 @@ class graph
 
 			height = image .getHeight();
 			width = image .getWidth();
+			type = image.getType();
 			ImageIO.write(image, "jpg", picture);
 			picture.flush();
 			byte[] imgByte = picture.toByteArray();	
@@ -47,6 +48,11 @@ class graph
 	public int getH()
 	{
 		return height;
+	}
+	
+	public int gett()
+	{
+		return type;
 	}
 	
 	public BufferedImage getP()
@@ -76,7 +82,7 @@ class graph
 
 
 
-/*
+
    	void showImg()
    	{
    		JFrame frame = new JFrame();
@@ -84,9 +90,11 @@ class graph
 		JLabel lblimage = new JLabel(new ImageIcon(image));
 		frame.getContentPane().add(lblimage, BorderLayout.CENTER);
 		frame.setSize(width+50, height+50);
+		frame.setLocation(300,0);
+		//frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
    	}
-*/
+
   	int[][] getImageGRB()
   	{
   		int[][] pixels = new int[width][height];

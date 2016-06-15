@@ -20,6 +20,7 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 	public ArrayList<Point> pointR = new ArrayList();
 	private ArrayList<Integer> gsinkVertex;
 	static BufferedImage image = null;
+	static BufferedImage image2 = null;
 	static int[][] pixels = null;
  	private	final Point A_BREAK = new Point(-1,-1);
  	private Point p;
@@ -35,7 +36,9 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 		g1 = new graph(input.nextLine());
 //		g1 = new graph("test1");
 		image = g1.getP();
-		//g1.showImg();
+		image2 = new BufferedImage(g1.getW(), g1.getH(), g1.gett());
+		image2.setData(image.getData());
+		g1.showImg();
 		pixels = g1.getImageGRB();
 		
 		A.setTitle("Draw");
@@ -46,11 +49,12 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 		A.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		A.setSize(g1.getW()+50, g1.getH()+50);
 		A.setLocation(g1.getW() + 100 , 0);
+		A.setLocationRelativeTo(null);
 		test B = new test();
 		A.add(B);
 		A.setVisible(true);
 	}
-
+	
 	public test(){
 		super.addMouseListener(this);
 		super.addMouseMotionListener(this);
@@ -132,6 +136,7 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
     		flow = maxflowA.maxflow(graph);
     		System.out.println("Max flow = " + flow);
     		
+    		image2.setData(image.getData());
     		gsinkVertex=maxflowA.resourceVertex();
     		int sWight = g1.getW(), sHight = g1.getH();
             for (int x, y, ii=0; ii < gsinkVertex.size() ; ii++) {
@@ -141,18 +146,20 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
                 	//int r=(rgb&0x00ff0000)>>16;
                 	//int g=(rgb&0x0000ff00)>>8;
                 	//int b=rgb&0x000000ff;
-                	int black=0;
+                	int black=238;
                 	black=(0xff000000|(black<<16)|(black<<8)|black);                               
                 	/*pixels[x][y]=rgb;
                 	System.out.printf(rgb + " ,");*/
-                	image.setRGB(x,y,black);
+                	image2.setRGB(x,y,black);
 //                	System.out.printf(gsinkVertex.size() + " ,");
             }
     		JFrame frame = new JFrame();
        		frame.setTitle("after");
-    		JLabel lblimage = new JLabel(new ImageIcon(image));
+    		JLabel lblimage = new JLabel(new ImageIcon(image2));
     		frame.getContentPane().add(lblimage, BorderLayout.CENTER);
     		frame.setSize(width+50, high+50);
+    		//frame.setLocationRelativeTo(null);
+    		frame.setLocation(300,100+sHight);
     		frame.setVisible(true);
         }
     }
