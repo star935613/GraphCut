@@ -16,6 +16,8 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 {
 
 	private int step = 1,click = 1;
+	private static int ww = 300;
+	private static int wh = 0;
 	public ArrayList<Point> pointL = new ArrayList();
 	public ArrayList<Point> pointR = new ArrayList();
 	private ArrayList<Integer> gsinkVertex;
@@ -24,7 +26,7 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 	static int[][] pixels = null;
  	private	final Point A_BREAK = new Point(-1,-1);
  	private Point p;
- 	
+ 	Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
  	static JFrame A = new JFrame();
 	static Scanner input;
 	static graph g1;
@@ -41,8 +43,11 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 		g1.showImg();
 		pixels = g1.getImageGRB();
 		
+		ww = g1.getW();
+		wh = g1.getH();
+		
 		A.setTitle("Draw");
-
+		
 		JLabel lblimage = new JLabel(new ImageIcon(image));
 		A.add(lblimage, BorderLayout.CENTER);
 
@@ -80,6 +85,18 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 //	    		= {{240,	227,	74},
 //				{204,	240,	51},
 //				{227,	36,	74}};
+//	    		= {{240, 240, 227, 227, 224, 224, 240, 240, 227, 227, 224, 224},
+//	    			{240, 240, 227, 227, 224, 224, 240, 240, 227, 227, 224, 224},
+//    				{204, 204, 51, 51, 240,	240, 204, 204, 51, 51, 240,	240},
+//    				{204, 204, 51, 51, 240,	240, 204, 204, 51, 51, 240,	240},
+//    				{227, 227, 36, 36, 74, 74, 227, 227, 36, 36, 74, 74},
+//    				{227, 227, 226, 226, 224, 224, 227, 227, 226, 226, 224, 224},
+//		    		{240, 240, 227, 227, 224, 224, 240, 240, 227, 227, 224, 224},
+//					{240, 240, 227, 227, 224, 224, 240, 240, 227, 227, 224, 224},
+//					{204, 204, 51, 51, 240,	240, 204, 204, 51, 51, 240,	240},
+//					{204, 204, 51, 51, 240,	240, 204, 204, 51, 51, 240,	240},
+//					{227, 227, 36, 36, 74, 74, 227, 227, 36, 36, 74, 74},
+//					{227, 227, 226, 226, 224, 224, 227, 227, 226, 226, 224, 224}};
     		for (int i = 0; i < width; i++) {
     			for (int j = 0; j < high; j++) {
     				o[i][j] = (pixels[i][j] >> 16) & 0xff;
@@ -115,8 +132,8 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
     		System.out.println("Start initWeight");
     		w.initWeightDouble();
     		
-    		double b = 10;
-    		double Lamda = 2000;
+    		double b = 1;
+    		double Lamda = 1;
     		w.setB(b);
     		w.setLamda(Lamda);
     		graph = w.findWeightDouble();
@@ -147,7 +164,13 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
     		frame.getContentPane().add(lblimage, BorderLayout.CENTER);
     		frame.setSize(width+50, high+50);
     		//frame.setLocationRelativeTo(null);
-    		frame.setLocation(300,100+sHight);
+    		wh+=50+sHight;
+    		if(wh+300>screenSize.getHeight())
+    		{
+    			ww=ww+sWight+80;
+    			wh=100+sHight;
+    		}
+    		frame.setLocation(ww,wh);
     		frame.setVisible(true);
         }
     }
