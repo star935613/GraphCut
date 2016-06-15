@@ -29,10 +29,10 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 	static graph g1;
 	public static void main(String args[]){
 		
-//		System.out.println("Pls input the file name:");
-//		input = new Scanner(System.in);
-//		g1 = new graph(input.nextLine())
-		g1 = new graph("dog");
+		System.out.println("Pls input the file name:");
+		input = new Scanner(System.in);
+		g1 = new graph(input.nextLine());
+//		g1 = new graph("test1");
 		image = g1.getP();
 		g1.showImg();
 		pixels = g1.getImageGRB();
@@ -122,24 +122,44 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
     		System.out.println("Start initWeight");
     		w.initWeightDouble();
     		
-    		int b = 100;
-    		double Lamda = 60;
-//    		for (; Lamda > 0.00000000000000000000000001; Lamda = Lamda / 10) {
+    		double b = 1;
+    		double Lamda = 1;
+//    		for (; Lamda <= 1000; Lamda++) {
 //    			for (; b <=1000; b ++) {
+//    			while (true) {
 		    		w.setB(b);
 		    		w.setLamda(Lamda);
 		    		
 //		    		System.out.println("Start findWeights");
 		    		graph = w.findWeightDouble();
 		    		
-		    		if (w.test == 1) {
+//		    		if (w.test == 1) {
 			
 			    		maxflow maxflowA = new maxflow(width*high, width, high);
 			    		flow = maxflowA.maxflow(graph);
 			    		System.out.println("Max flow = " + flow);
+			    		
+
+//			    		w.printWeightDouble();
+//			    		
+//			    		System.out.println("Start printPointL");
+//			    		w.printPointL();
+//			    		
+//			    		System.out.println("Start printPointR");
+//			    		w.printPointR();
+//			    		
+//			    		System.out.println("Start printS");
+//			    		w.printS();
+//			    		
+//			    		System.out.println("Start printT");
+//			    		w.printT();
+//			    		break;
+//		    		}
+//		    		else {
+////		    			Lamda = Lamda * 0.1;
 //		    		}
 //		    	}
-    		}
+//    		}
         }
     }
 
