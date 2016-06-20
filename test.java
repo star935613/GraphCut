@@ -23,25 +23,32 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
 	private ArrayList<Integer> gsinkVertex;
 	static BufferedImage image = null;
 	static BufferedImage image2 = null;
+	static BufferedImage image3 = null;
 	static int[][] pixels = null;
+	static int[][] pixels2 = null;
  	private	final Point A_BREAK = new Point(-1,-1);
  	private Point p;
  	Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
  	static JFrame A = new JFrame();
 	static Scanner input;
 	static graph g1;
+	static graph g2;
 	public static void main(String args[]){
 		
 		System.out.println("Pls input the file name:");
 
 		input = new Scanner(System.in);
 		g1 = new graph(input.nextLine());
+		input = new Scanner(System.in);
+		g2 = new graph(input.nextLine());
 //		g1 = new graph("test1");
 		image = g1.getP();
 		image2 = new BufferedImage(g1.getW(), g1.getH(), g1.gett());
 		image2.setData(image.getData());
+		image3 = g2.getP();
 		g1.showImg();
 		pixels = g1.getImageGRB();
+		pixels2 = g2.getImageGRB();
 		
 		ww = g1.getW();
 		wh = g1.getH();
@@ -147,15 +154,14 @@ public class test extends JPanel implements MouseMotionListener, MouseListener, 
             for (int x, y, ii=0; ii < gsinkVertex.size() ; ii++) {
             		x=gsinkVertex.get(ii)%sWight;
             		y=gsinkVertex.get(ii)/sWight;
-                	//int rgb=pixels[x][y];
-                	//int r=(rgb&0x00ff0000)>>16;
-                	//int g=(rgb&0x0000ff00)>>8;
-                	//int b=rgb&0x000000ff;
-                	int black=238;
-                	black=(0xff000000|(black<<16)|(black<<8)|black);                               
+                	int rgb=image3.getRGB(x,y);
+                	int red=(rgb&0x00ff0000)>>16;
+                	int green=(rgb&0x0000ff00)>>8;
+                	int blue=rgb&0x000000ff;
+                	rgb=(0xff000000|(red<<16)|(green<<8)|blue);                               
                 	/*pixels[x][y]=rgb;
                 	System.out.printf(rgb + " ,");*/
-                	image2.setRGB(x,y,black);
+                	image2.setRGB(x,y,rgb);
 //                	System.out.printf(gsinkVertex.size() + " ,");
             }
     		JFrame frame = new JFrame();
